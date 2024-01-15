@@ -59,7 +59,7 @@ mod_layout_base.texto_diversos()
 aba1, aba2, aba3, aba4, aba5 = st.tabs(['Exportação', 'Comércio', 'Produção', 'Processamento', 'Importação'])
 
 with aba1:
-    st.header('Dados de Exportação avaliações de vinhos', divider='violet')
+    st.header('Dados de Exportação de vinhos', divider='violet')
 
     # lendo as tabelas
     df_exp_vinho_tab = mod_abrir_arquivo.exportacao()[0]
@@ -94,15 +94,15 @@ with aba1:
 
     with col1:
         st.markdown("""
-        **Principais Exportadores**:
+        🔝 **Principais Exportadores**:
         - Paraguai, Rússia e Estados Unidos lideram em valor de exportações de vinho.
 
-        **Economia do Paraguai**:
+        💵 **Economia do Paraguai**:
         - Conforme tabela de países com o Paraguai à frente, exportando um total de US$ 85.606.168,00, seguido pelos Estados Unidos e Rússia.
         - A análise dos valores de exportação mostra que o Paraguai teve um maior valor de exportação, superando os Estados Unidos. Esse fenômeno pode ser explicado por vários fatores relacionados ao desempenho econômico e às relações comerciais entre os países.
         - Crescimento Econômico do Paraguai: A economia do Paraguai também registrou um crescimento significativo entre 2022 e 2023. O setor agrícola, particularmente a produção de soja, arroz, cana-de-açúcar e mandioca, foi um fator-chave nesse crescimento. O Paraguai experimentou um aumento na demanda externa por seus produtos.
 
-        **Mercado dos EUA**:
+        🗽 **Mercado dos EUA**:
         - Os EUA representam o maior mercado de varejo de vinhos e são um dos que mais crescem em consumo e produção. O mercado americano é majoritariamente ocupado por produtores locais.
          """)
         
@@ -135,20 +135,20 @@ with aba1:
 
         valor_paisformatado = mod_graficos.formatar_como_moeda(valor_pais, milao)
 
-        st.write(f"**:violet[{pais}]** tem o valor exportação de **{valor_paisformatado}**.")
+        st.write(f"🌏 **:violet[{pais}]** tem o valor exportação de **{valor_paisformatado}**.")
         st.markdown("""
             Os gráficos que criamos mostram a variação das exportações de vinhos dos principais paises entre os anos de 1970 e 2022. Este gráfico oferece uma visão detalhada e histórica da evolução da exportação de vinhos do país selecionado, permitindo identificar padrões, picos e quedas ao longo do tempo.
                     """)
     with col4:
         st.markdown("""
-               **Resumo do Gráfico de Quantidade:**
+            📋 **Resumo do Gráfico de Quantidade:**
             - **Período:** 1970 - 2022
             - **Dados Representados:** Exportações de vinhos global.
             - **Crescimento Significativo:** A partir da década de 1980, observa-se um aumento significativo nas exportações, atingindo picos notáveis em determinados anos.
             - **Variações Acentuadas:** Há variações acentuadas na quantidade de exportações ao longo do período analisado, indicando flutuações no mercado de vinhos ou na capacidade de exportação do país.
             - **Picos de Exportação:** Notam-se picos expressivos de exportação em alguns anos específicos, sugerindo eventos ou mudanças no mercado que impactaram positivamente as exportações.
 
-            **Gráfico de Exportação por Valor:** Complementa a análise, mostrando o valor monetário dessas exportações ao longo do mesmo período. Isso permiti avaliar não apenas o volume exportado, mas também como o valor das exportações de vinhos variou ao longo do tempo, oferecendo uma visão mais abrangente da importância econômica do setor para o país.
+            📶 **Gráfico de Exportação por Valor:** Complementa a análise, mostrando o valor monetário dessas exportações ao longo do mesmo período. Isso permiti avaliar não apenas o volume exportado, mas também como o valor das exportações de vinhos variou ao longo do tempo, oferecendo uma visão mais abrangente da importância econômica do setor para o país.
                     """)
 
     #######################################################
@@ -165,19 +165,19 @@ with aba1:
 
 
 with aba2:
-    st.header('Dados de Comércio avaliações de vinhos', divider='violet')
+    st.header('Dados de Comércio para avaliações de vinhos', divider='violet')
     st.markdown('**Comércio**: Todos os países que vendem vinhos.')
 
 with aba3:
-    st.header('Dados de Produção avaliações de vinhos', divider='violet')
+    st.header('Dados de Produção de vinhos', divider='violet')
     st.markdown('**Produção**: Todos os países que produzem vinhos.')
 
 with aba4:
-    st.header('Dados de Processamento avaliações de vinhos', divider='violet')
+    st.header('Dados de Processamento de vinhos', divider='violet')
     st.markdown('**Processamento**: Todos os países que processam vinhos.')
 
 with aba5:
-    st.header('Dados de Importação avaliações de vinhos', divider='violet')
+    st.header('Dados de Importação de vinhos', divider='violet')
     st.markdown('**Importação**: Todos os países que importam vinhos.')
 
 
