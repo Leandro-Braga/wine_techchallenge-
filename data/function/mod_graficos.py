@@ -105,6 +105,10 @@ def grafico_ano_barra(df):
     # Função para formatar
     plt.gca().yaxis.set_major_formatter(FuncFormatter(billion_formatter))
 
+    ax = plt.gca()
+    ax.spines['top'].set_visible(False)
+    ax.spines['right'].set_visible(False)
+
     plt.tight_layout()
 
     st.pyplot(plt)
