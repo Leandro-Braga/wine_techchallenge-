@@ -1,7 +1,7 @@
 import warnings
 
 import pandas as pd
-import pretty_errors
+# import pretty_errors
 import streamlit as st
 from PIL import Image
 
@@ -10,6 +10,8 @@ from data.layout import mod_layout_base
 
 ## --- ignorar avisos Pandas --- ##
 warnings.filterwarnings('ignore')
+
+# URL: winetechchallengegrupo16.streamlit.app
 
 ### ---- GRUPO 16 ---- ###
 

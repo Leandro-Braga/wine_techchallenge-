@@ -1,6 +1,6 @@
 import streamlit as st
-from streamlit_extras.metric_cards import style_metric_cards
-from streamlit_extras.stylable_container import stylable_container
+# from streamlit_extras.metric_cards import style_metric_cards
+# from streamlit_extras.stylable_container import stylable_container
 
 
 # Configuração do tamanho dos textos principais
