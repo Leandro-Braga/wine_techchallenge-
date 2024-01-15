@@ -11,7 +11,7 @@ from data.layout import mod_layout_base
 ## --- ignorar avisos Pandas --- ##
 warnings.filterwarnings('ignore')
 
-# URL: winetechchallengegrupo16.streamlit.app
+# URL: https://winetechchallengegrupo16.streamlit.app/
 
 ### ---- GRUPO 16 ---- ###
 
