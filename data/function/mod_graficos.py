@@ -144,6 +144,10 @@ def grafico_linha_pais_qtd(df_exp_vinho_tab, coluna):
     # plt.gca().set_facecolor('#E6A4B4')
     plt.grid(True, axis='y', linestyle='--', linewidth=0.7, color='gray')
 
+    ax = plt.gca()
+    ax.spines['top'].set_visible(False)
+    ax.spines['right'].set_visible(False)
+
     plt.tight_layout()
     # plt.show()
     st.pyplot(plt)
@@ -182,6 +186,10 @@ def grafico_linha_pais_valor(df_exp_vinho_tab, coluna):
     plt.gca().set_facecolor('#f8f8f8')
     # plt.gca().set_facecolor('#E6A4B4')
     plt.grid(True, axis='y', linestyle='--', linewidth=0.7, color='gray')
+
+    ax = plt.gca()
+    ax.spines['top'].set_visible(False)
+    ax.spines['right'].set_visible(False)
 
     plt.tight_layout()
     # plt.show()
