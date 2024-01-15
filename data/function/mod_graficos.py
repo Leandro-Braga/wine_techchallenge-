@@ -18,6 +18,11 @@ def formatar_como_moeda(valor, divisor_casas):
     return f'US$ {valor/divisor_casas:,.2f}{"B" if valor >= 1000000000 else "MM"}'.replace(',', 'X').replace('.', ',').replace('X', '.')
 
 
+def formatar_como_quantidade(valor, divisor_casas):
+    # Ajuste da formatação de moeda
+    return f'{valor/divisor_casas:,.2f}QTD'.replace(',', 'X').replace('.', ',').replace('X', '.')
+
+
 def billion_formatter(x, pos):
     bilao = 1000000000
     milao = 1000000
@@ -126,7 +131,7 @@ def grafico_linha_pais_qtd(df_exp_vinho_tab, coluna):
     plt.xticks(range(df_qtd.index.min(), df_qtd.index.max()+1, 2), rotation=45)
 
     # Aplicando a função de formatação ao eixo Y
-    plt.gca().get_yaxis().set_major_formatter(plt.FuncFormatter(lambda x, loc: formatar_como_moeda(x, milao)))
+    plt.gca().get_yaxis().set_major_formatter(plt.FuncFormatter(lambda x, loc: formatar_como_quantidade(x, milao)))
 
     plt.grid(True)
     # plt.grid(True, axis='x', linestyle='--', linewidth=0.7, color='gray')

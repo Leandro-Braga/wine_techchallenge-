@@ -83,12 +83,13 @@ with aba1:
     mod_graficos.grafico_pais_valortotal(df_pais_valor)
 
 
-    # Mostrando os 10 países com maior exportação de vinhos
+    # Mostrando os 10 países com maior exportação de vinhos + Brasil
     df_pais_valor_maiores = df_pais_valor[['pais', 'valor_total']].sort_values(by='valor_total', ascending=False).head(10)
+    brasil_total = df_pais_valor[df_pais_valor['pais'] == 'Brasil'][['pais', 'valor_total']]
+    df_pais_valor_maiores = pd.concat([df_pais_valor_maiores, brasil_total], axis=0) 
     df_pais_valor_maiores = df_pais_valor_maiores.rename(columns={'pais':'País', 'valor_total':'Valor Total'})
     df_pais_valor_maiores = df_pais_valor_maiores.set_index('País')
 
-   
     col1, col2 = st.columns(2)
 
     with col1:
@@ -106,7 +107,7 @@ with aba1:
          """)
         
     with col2:
-        st.markdown('- **10 Países com maior :blue[exportação] de :violet[vinhos]:**')
+        st.markdown('- **Brasil em comparação com os 10 Países com maior :blue[exportação] de :violet[vinhos]:**')
         st.table(df_pais_valor_maiores.style.format({'Valor Total': 'US$ {:.2f}'}))
     
     st.divider()
@@ -124,7 +125,7 @@ with aba1:
 
     with col3:
 
-        pais = st.selectbox('Selecione o País', df_pais_valor_maioresV1['País'].unique())
+        pais = st.selectbox('Selecione o País:', df_pais_valor_maioresV1['País'].unique())
 
         valor_pais = df_pais_valor_maioresV1[df_pais_valor_maioresV1['País'] == pais]['Valor Total'].astype(int)
 
@@ -142,8 +143,7 @@ with aba1:
         st.markdown("""
                **Resumo do Gráfico de Quantidade:**
             - **Período:** 1970 - 2022
-            - **Dados Representados:** Exportações de vinhos do Paraguai
-            - **Observações:**
+            - **Dados Representados:** Exportações de vinhos global.
             - **Crescimento Significativo:** A partir da década de 1980, observa-se um aumento significativo nas exportações, atingindo picos notáveis em determinados anos.
             - **Variações Acentuadas:** Há variações acentuadas na quantidade de exportações ao longo do período analisado, indicando flutuações no mercado de vinhos ou na capacidade de exportação do país.
             - **Picos de Exportação:** Notam-se picos expressivos de exportação em alguns anos específicos, sugerindo eventos ou mudanças no mercado que impactaram positivamente as exportações.
