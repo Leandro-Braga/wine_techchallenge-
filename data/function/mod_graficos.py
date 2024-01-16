@@ -6,12 +6,6 @@ import seaborn as sns
 import streamlit as st
 from matplotlib.ticker import FuncFormatter
 
-# def formatar_como_moeda(valor, divisor_casas):
-
-#     # Ajuste da formatação de moeda em reais
-#     # divisor_casas = 1000000000
-
-#     return f'R$ {valor/divisor_casas:,.2f}{"B" if valor >= 1000000000 else "MM"}'.replace(',', 'X').replace('.', ',').replace('X', '.')
 
 def formatar_como_moeda(valor, divisor_casas):
     # Ajuste da formatação de moeda
