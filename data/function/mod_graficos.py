@@ -20,7 +20,7 @@ def formatar_como_moeda(valor, divisor_casas):
 
 def formatar_como_quantidade(valor, divisor_casas):
     # Ajuste da formatação de moeda
-    return f'{valor/divisor_casas:,.2f}QTD'.replace(',', 'X').replace('.', ',').replace('X', '.')
+    return f'{valor/divisor_casas:,.2f}{"B" if valor >= 1000000000 else "MM"}'.replace(',', 'X').replace('.', ',').replace('X', '.')
 
 
 def billion_formatter(x, pos):
@@ -67,52 +67,55 @@ def grafico_ano_barra(df):
     bilhao = 1000000000
     milao = 1000000
 
-    # Filtrando por 'classe' e garantindo que 'total_geral' é numérico
-    df = df[df['classe'] == 'valor'][['total_geral']].astype(int)
+    try:
+        # Filtrando por 'classe' e garantindo que 'total_geral' é numérico
+        df = df[df['classe'] == 'valor'][['total_geral']].astype(int)
 
-    # Calculando a média dos gastos
-    media_gastos = df['total_geral'].mean()
+        # Calculando a média dos gastos
+        media_gastos = df['total_geral'].mean()
 
-    # Criando o gráfico com a linha de média e rótulos de valor
-    plt.figure(figsize=(14, 5))
-    sns.barplot(x=df.index, y=df['total_geral'], palette="viridis")
+        # Criando o gráfico com a linha de média e rótulos de valor
+        plt.figure(figsize=(14, 5))
+        sns.barplot(x=df.index, y=df['total_geral'], palette="viridis")
 
-    if len(df) > 1:
-        plt.text(len(df) - 1, media_gastos, f'Média: {formatar_como_moeda(media_gastos, milao)}', 
-                color='red', ha="right", va="bottom")
-        plt.axhline(media_gastos, color='red', linestyle='--')
+        if len(df) > 1:
+            plt.text(len(df) - 1, media_gastos, f'Média: {formatar_como_moeda(media_gastos, milao)}', 
+                    color='red', ha="right", va="bottom")
+            plt.axhline(media_gastos, color='red', linestyle='--')
 
-    plt.title('Total de Exportação por Ano', fontsize=16)
-    plt.xlabel('Ano', fontsize=10)
-    plt.ylabel('Total', fontsize=10)
-    plt.xticks(rotation=45)
-    
-    # Alterando a cor de fundo do grid
-    # plt.grid(True, color='#f0f0f0')
+        plt.title('Total de Exportação por Ano', fontsize=16)
+        plt.xlabel('Ano', fontsize=10)
+        plt.ylabel('Total', fontsize=10)
+        plt.xticks(rotation=45)
+        
+        # Alterando a cor de fundo do grid
+        # plt.grid(True, color='#f0f0f0')
 
-    # Alterando a cor de fundo do espaço do gráfico
-    plt.gca().set_facecolor('#f8f8f8')
+        # Alterando a cor de fundo do espaço do gráfico
+        plt.gca().set_facecolor('#F3F8FF')
 
-    plt.grid(True, axis='y', linestyle='--', linewidth=0.7, color='gray')
-    
+        plt.grid(True, axis='y', linestyle='--', linewidth=0.7, color='gray')
+        
 
-    # Adicionando rótulos de valor nas barras
+        # Adicionando rótulos de valor nas barras
 
-    # for index, value in df['total_geral'].items():
-    #     plt.text(index, value, formatar_como_moeda(value, milao), color='black', ha="center", va="bottom")
-    # for index, value in enumerate(df['total_geral']):
-    #         plt.text(index, value, f'{formatar_como_moeda(value, milao)}', color='black', ha="center", va="bottom")
+        # for index, value in df['total_geral'].items():
+        #     plt.text(index, value, formatar_como_moeda(value, milao), color='black', ha="center", va="bottom")
+        # for index, value in enumerate(df['total_geral']):
+        #         plt.text(index, value, f'{formatar_como_moeda(value, milao)}', color='black', ha="center", va="bottom")
 
-    # Função para formatar
-    plt.gca().yaxis.set_major_formatter(FuncFormatter(billion_formatter))
+        # Função para formatar
+        plt.gca().yaxis.set_major_formatter(FuncFormatter(billion_formatter))
 
-    ax = plt.gca()
-    ax.spines['top'].set_visible(False)
-    ax.spines['right'].set_visible(False)
+        ax = plt.gca()
+        ax.spines['top'].set_visible(False)
+        ax.spines['right'].set_visible(False)
 
-    plt.tight_layout()
+        plt.tight_layout()
 
-    st.pyplot(plt)
+        st.pyplot(plt)
+    except:
+        st.warning('Atualizar a página!')
 
 
 
@@ -145,7 +148,8 @@ def grafico_linha_pais_qtd(df_exp_vinho_tab, coluna):
     plt.grid(True, color='#F5EEE6')
 
     # Alterando a cor de fundo do espaço do gráfico
-    plt.gca().set_facecolor('#f8f8f8')
+    plt.gca().set_facecolor('#F3F8FF')
+    # plt.gca().set_facecolor('#f8f8f8')
     # plt.gca().set_facecolor('#E6A4B4')
     plt.grid(True, axis='y', linestyle='--', linewidth=0.7, color='gray')
 
@@ -188,7 +192,8 @@ def grafico_linha_pais_valor(df_exp_vinho_tab, coluna):
     plt.grid(True, color='#F5EEE6')
 
     # Alterando a cor de fundo do espaço do gráfico
-    plt.gca().set_facecolor('#f8f8f8')
+    plt.gca().set_facecolor('#F3F8FF')
+    # plt.gca().set_facecolor('#f8f8f8')
     # plt.gca().set_facecolor('#E6A4B4')
     plt.grid(True, axis='y', linestyle='--', linewidth=0.7, color='gray')
 
