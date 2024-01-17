@@ -1,5 +1,6 @@
 import pandas as pd
 import streamlit as st
+
 # from streamlit_extras.dataframe_explorer import dataframe_explorer
 
 ## -- Arquivos base -- ##
@@ -84,7 +85,7 @@ def exportacao():
 
 
 # importação
-@st.cache_data
+# @st.cache_data
 def importacao():
     df_imp_vinhos = pd.read_csv(imp_vinhos, delimiter=';')
     df_imp_espumante = pd.read_csv(imp_espumante, delimiter=';')
@@ -95,7 +96,7 @@ def importacao():
 
 
 # Processamento
-@st.cache_data
+# @st.cache_data
 def processamento():
     df_processa_viniferas = pd.read_csv(processa_viniferas, delimiter='\t')
     df_processa_americanas = pd.read_csv(processa_americanas, delimiter=';')
@@ -105,21 +106,21 @@ def processamento():
 
 
 # produção
-@st.cache_data
+# @st.cache_data
 def producao_geral():
     df_producao = pd.read_csv(producao, delimiter=';')
     return df_producao
 
 
 # Comercialização
-@st.cache_data
+# @st.cache_data
 def comercializacao():
     df_comercio = pd.read_csv(comercio, delimiter=';')
     return df_comercio
 
 
 # base país
-@st.cache_data
+# @st.cache_data
 def pais_geral(df_exp_vinho_tab):
 
     df_pais = pd.read_csv(pais, delimiter=';', encoding='latin-1')
