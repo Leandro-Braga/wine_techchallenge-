@@ -33,14 +33,18 @@ comercio = './data/doc/Comercio.csv'
 pais = './data/doc/pais.csv'
 
 ## -- Dataframes -- ##
+df_exp_vinho = pd.read_csv(exp_vinho, delimiter=';')
+df_exp_espumante = pd.read_csv(exp_espumante, delimiter=';')
+df_exp_suco = pd.read_csv(exp_suco, delimiter=';')
+df_exp_uva = pd.read_csv(exp_uva, delimiter=';')
+
+df_pais = pd.read_csv(pais, delimiter=';', encoding='latin-1')
+
+
 
 # Exportação
 @st.cache_data
 def exportacao():
-    df_exp_vinho = pd.read_csv(exp_vinho, delimiter=';')
-    df_exp_espumante = pd.read_csv(exp_espumante, delimiter=';')
-    df_exp_suco = pd.read_csv(exp_suco, delimiter=';')
-    df_exp_uva = pd.read_csv(exp_uva, delimiter=';')
 
     # -- tratand a base df_exp_vinho -- #
     
@@ -80,6 +84,8 @@ def exportacao():
     df_exp_vinho_tab['classe'] = df_exp_vinho_tab.index.map(classificar)
     # alteração do índice do tipo string retirando o '.1'
     df_exp_vinho_tab.index = df_exp_vinho_tab.index.map(lambda x: x.replace('.1', ''))
+
+
 
     return df_exp_vinho_tab, df_exp_espumante, df_exp_suco, df_exp_uva
 
@@ -123,7 +129,7 @@ def comercializacao():
 # @st.cache_data
 def pais_geral(df_exp_vinho_tab):
 
-    df_pais = pd.read_csv(pais, delimiter=';', encoding='latin-1')
+    # df_pais = pd.read_csv(pais, delimiter=';', encoding='latin-1')
 
     # Recebe o df_exp_vinho_tab e cria uma coluna com o 'total_geral'
     # para ter o total por pais
@@ -142,10 +148,9 @@ def pais_geral(df_exp_vinho_tab):
     df_pais = df_pais[filtro_pais]
     df_pais = df_pais.rename(columns={'NO_PAIS':'pais', 'NO_PAIS_ING':'pais_ing'})
     df_pais_valortotal_nomes = pd.merge(df_pais_valortotal, df_pais, how='left', on='pais')
-    filtro_paistotal = ['pais_ing', 'pais','valor_total']
+    filtro_paistotal = ['pais_ing', 'pais', 'valor_total']
     # filtro_paistotal = ['pais_ing', 'pais','valor_total', 'norm', 'cor']
     df_pais_valortotal_nomes = df_pais_valortotal_nomes[filtro_paistotal]
-
 
     return df_pais_valortotal_nomes
 

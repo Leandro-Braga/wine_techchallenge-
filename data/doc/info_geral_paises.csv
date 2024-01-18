@@ -1,0 +1,282 @@
+country;iso_code;country_us;continent;CO_PAIS_ISON3
+Angola;AGO;Angola;África;24
+Cabo Verde;CPV;Cape Verde;África;132
+Camarões;CMR;Cameroon;África;120
+Comores;COM;Comoros;África;174
+Congo;COG;Congo;África;178
+Costa do Marfim;CIV;Cote D'Ivore;África;384
+Benin;BEN;Benin;África;204
+Gana;GHA;Ghana;África;288
+Libéria;LBR;Liberia;África;430
+Mauritânia;MRT;Mauritania;África;478
+Moçambique;MOZ;Mozambique;África;508
+Nigéria;NGA;Nigeria;África;566
+Quênia;KEN;Kenya;África;404
+São Tomé e Príncipe;STP;São Tome and Principe;África;678
+Senegal;SEN;Senegal;África;686
+Serra Leoa;SLE;Sierra Leone;África;694
+Suazilândia;SWZ;Swaziland;África;748
+África do Sul;ZAF;South Africa;África;710
+Tanzânia;TZA;Tanzania;África;834
+Togo;TGO;Togo;África;768
+Tunísia;TUN;Tunisia;África;788
+Burkina Faso;BFA;Burkina Faso;África;854
+Argélia;DZA;Algeria;África;12
+Botsuana;BWA;Botswana;África;72
+Burundi;BDI;Burundi;África;108
+Egito;EGY;Egypt;África;818
+Eritreia;ERI;Eritrea;África;232
+Etiópia;ETH;Ethiopia;África;231
+Gabão;GAB;Gabon;África;266
+Gâmbia;GMB;Gambia;África;270
+Guiné;GIN;Guinea;África;324
+Guiné Equatorial;GNQ;Equatorial Guinea;África;226
+Guiné-Bissau;GNB;Guinea-Bissau;África;624
+Lesoto;LSO;Lesotho;África;426
+Líbia;LBY;Libya;África;434
+Madagascar;MDG;Madagascar;África;450
+Malavi;MWI;Malawi;África;454
+Mali;MLI;Mali;África;466
+Marrocos;MAR;Morocco;África;504
+Maurício;MUS;Mauritius;África;480
+Namíbia;NAM;Namibia;África;516
+Níger;NER;Niger;África;562
+República Centro-Africana;CAF;Central African Republic;África;140
+Reunião;REU;Reunion;África;638
+Zimbábue;ZWE;Zimbabwe;África;716
+Ruanda;RWA;Rwanda;África;646
+Saara Ocidental;ESH;Western Sahara;África;732
+Santa Helena;SHN;Saint Helena;África;654
+Seicheles;SYC;Seychelles;África;690
+Somália;SOM;Somalia;África;706
+Sudão;SDN;Sudan;África;736
+Sudão do Sul;SSD;South Sudan;África;728
+Terras Austrais Francesas;ATF;French Southern Lands;África;898
+Território Britânico do Oceano Índico;IOT;British Indian Ocean Territory;África;86
+Djibuti;DJI;Djibouti;África;262
+Chade;TCD;Chad;África;148
+Uganda;UGA;Uganda;África;800
+Congo, República Democrática;COD;Democratic Republic of the Congo;África;180
+Zâmbia;ZMB;Zambia;África;894
+Anguilla;AIA;Anguilla;América Central e Caribe;660
+Antígua e Barbuda;ATG;Antigua and Barbuda;América Central e Caribe;28
+Antilhas Holandesas;ANT;Netherlands Antilles;América Central e Caribe;530
+Aruba;ABW;Aruba;América Central e Caribe;533
+Bahamas;BHS;Bahamas;América Central e Caribe;44
+Barbados;BRB;Barbados;América Central e Caribe;52
+Cayman, Ilhas;CYM;Cayman Islands;América Central e Caribe;136
+Costa Rica;CRI;Costa Rica;América Central e Caribe;188
+Cuba;CUB;Cuba;América Central e Caribe;192
+Curaçao;CUW;Curaçao;América Central e Caribe;531
+Dominica;DMA;Dominica Island;América Central e Caribe;212
+Granada;GRD;Grenada;América Central e Caribe;308
+Guatemala;GTM;Guatemala;América Central e Caribe;320
+Haiti;HTI;Haiti;América Central e Caribe;332
+Honduras;HND;Honduras;América Central e Caribe;340
+Jamaica;JAM;Jamaica;América Central e Caribe;388
+Panamá;PAN;Panama;América Central e Caribe;591
+Porto Rico;PRI;Puerto Rico;América Central e Caribe;630
+República Dominicana;DOM;Dominican Republic;América Central e Caribe;214
+El Salvador;SLV;El Salvador;América Central e Caribe;222
+São Vicente e Granadinas;VCT;Saint Vicent and the Granadines;América Central e Caribe;670
+Suriname;SUR;Suriname;América Central e Caribe;740
+Belize;BLZ;Belize;América Central e Caribe;84
+Bonaire, Saint Eustatius e Saba;BES;Bonaire, Saint Eustatius and Saba;América Central e Caribe;535
+Bouvet, Ilha;BVT;Bouvet Island;América Central e Caribe;74
+Falkland (Malvinas);FLK;Falkland Islands (Malvinas);América Central e Caribe;238
+Geórgia do Sul e Sandwich do Sul, Ilhas;SGS;South Georgia and the South Sandwich Islands;América Central e Caribe;239
+Guadalupe;GLP;Guadeloupe;América Central e Caribe;312
+Martinica;MTQ;Martinique;América Central e Caribe;474
+Montserrat;MSR;Montserrat;América Central e Caribe;500
+Nicarágua;NIC;Nicaragua;América Central e Caribe;558
+Saint Kitts e Nevis;KNA;St. Kitts and Nevis;América Central e Caribe;659
+São Bartolomeu;BLM;Saint Barthelemy;América Central e Caribe;652
+São Cristóvão e Névis;KNA;Saint Christopher and Nevis;América Central e Caribe;659
+Sint Maarten;SXM;Sint Maarten;América Central e Caribe;534
+Santa Lúcia;LCA;Saint Lucia;América Central e Caribe;662
+Trinidad e Tobago;TTO;Trinidad and Tobago;América Central e Caribe;780
+Turcas e Caicos, Ilhas;TCA;Turks and Caicos, Islands;América Central e Caribe;796
+Virgens, Ilhas (Britânicas);VGB;Virgin Islands (UK);América Central e Caribe;92
+Virgens, Ilhas (Americanas);VIR;Virgin Islands (USA);América Central e Caribe;850
+Canadá;CAN;Canada;América do Norte;124
+Estados Unidos;USA;United States;América do Norte;840
+México;MEX;Mexico;América do Norte;484
+Bermudas;BMU;Bermuda;América do Norte;60
+Groenlândia;GRL;Greenland;América do Norte;304
+Johnston, Ilhas;USA;Johnston (Island);América do Norte;840
+São Pedro e Miquelon;SPM;Saint Pierre and Miquelon;América do Norte;666
+Wake, Ilha;USA;Wake Island;América do Norte;840
+Zona do Canal do Panamá;PCZ;Panama Canal Zone;América do Norte;592
+Argentina;ARG;Argentina;América do Sul;32
+Bolívia;BOL;Bolivia;América do Sul;68
+Brasil;BRA;Brazil;América do Sul;76
+Chile;CHL;Chile;América do Sul;152
+Colômbia;COL;Colombia;América do Sul;170
+Equador;ECU;Ecuador;América do Sul;218
+Guiana Francesa;GUF;French Guyana;América do Sul;254
+Guiana;GUY;Guyana;América do Sul;328
+Paraguai;PRY;Paraguay;América do Sul;600
+Peru;PER;Peru;América do Sul;604
+Uruguai;URY;Uruguay;América do Sul;858
+Venezuela;VEN;Venezuela;América do Sul;862
+Internação na Zona Franca de Manaus;BRA;Internment in the Manaus Free Trade Zone;América do Sul;898
+Antártica;ATA;Antarctica;Antarctica;10
+Afeganistão;AFG;Afghanistan;Ásia;4
+Bangladesh;BGD;Bangladesh;Ásia;50
+China;CHN;China;Ásia;156
+Taiwan (Formosa);TWN;Taiwan;Ásia;158
+Filipinas;PHL;Philippines;Ásia;608
+Hong Kong;HKG;Hong Kong;Ásia;344
+Indonésia;IDN;Indonesia;Ásia;360
+Japão;JPN;Japan;Ásia;392
+Malásia;MYS;Malaysia;Ásia;458
+Cingapura;SGP;Singapore;Ásia;702
+Tailândia;THA;Thailand;Ásia;764
+Vietnã;VNM;Vietnam;Ásia;704
+Arábia Saudita;SAU;Saudi Arabia;Ásia;682
+Armênia;ARM;Armenia;Ásia;51
+Azerbaijão;AZE;Azerbaijan;Ásia;31
+Mianmar;MMR;Myanmar;Ásia;104
+Brunei;BRN;Brunei;Ásia;96
+Butão;BTN;Bhutan;Ásia;64
+Camboja;KHM;Cambodia;Ásia;116
+Cazaquistão;KAZ;Kazakhstan;Ásia;398
+Coreia do Norte;PRK;North Korea;Ásia;408
+Coreia do Sul;KOR;South Korea;Ásia;410
+Coveite (Kuweit);KWT;Kuwait;Ásia;414
+Dubai;ARE;Dubai;Ásia;784
+Emirados Árabes Unidos;ARE;United Arab Emirates;Ásia;784
+Geórgia;GEO;Georgia;Ásia;268
+Iêmen;YEM;Yemen;Ásia;887
+Índia;IND;India;Ásia;356
+Israel;ISR;Israel;Ásia;376
+Laos;LAO;Laos;Ásia;418
+Lebuan, Ilhas;MYS;Lebuan;Ásia;458
+Macau;MAC;Macao;Ásia;446
+Maldivas;MDV;Maldives;Ásia;462
+Mongólia;MNG;Mongolia;Ásia;496
+Nepal;NPL;Nepal;Ásia;524
+Paquistão;PAK;Pakistan;Ásia;586
+Palestina;PSE;Palestine;Ásia;275
+Quirguistão;KGZ;Kyrgyzstan;Ásia;417
+Síria;SYR;Syria;Ásia;760
+Sri Lanka;LKA;Sri Lanka;Ásia;144
+Tadjiquistão;TJK;Tajikistan;Ásia;762
+Timor Leste;TLS;East Timor;Ásia;626
+Turcomenistão;TKM;Turkmenistan;Ásia;795
+Uzbequistão;UZB;Uzbekistan;Ásia;860
+ ;YMD;Democratic Yemen;Ásia;720
+Áustria;AUT;Austria;Europa;40
+Bélgica;BEL;Belgium;Europa;56
+Bósnia-Herzegovina;BIH;Bosnia and Herzegovina;Europa;70
+Bulgária;BGR;Bulgaria;Europa;100
+Chipre;CYP;Cyprus;Europa;196
+Croácia;HRV;Croatia;Europa;191
+Dinamarca;DNK;Denmark;Europa;208
+Espanha;ESP;Spain;Europa;724
+Estônia;EST;Estonia;Europa;233
+Finlândia;FIN;Finland;Europa;246
+França;FRA;France;Europa;250
+Gibraltar;GIB;Gibraltar;Europa;292
+Grécia;GRC;Greece;Europa;300
+Hungria;HUN;Hungary;Europa;348
+Ilha de Man;IMN;Isle of Man;Europa;833
+Irlanda;IRL;Ireland;Europa;372
+Itália;ITA;Italy;Europa;380
+Letônia;LVA;Latvia;Europa;428
+Luxemburgo;LUX;Luxembourg;Europa;442
+Malta;MLT;Malta;Europa;470
+Montenegro;MNE;Montenegro;Europa;499
+Noruega;NOR;Norway;Europa;578
+Polônia;POL;Poland;Europa;616
+Portugal;PRT;Portugal;Europa;620
+Reino Unido;GBR;United Kingdom;Europa;826
+Rússia;RUS;Russia;Europa;643
+Suécia;SWE;Sweden;Europa;752
+Suíça;CHE;Switzerland;Europa;756
+Tcheca, República;CZE;Czech Republic;Europa;203
+Turquia;TUR;Turkey;Europa;792
+Aland, Ilhas;ALA;Aland Islands;Europa;248
+Albânia;ALB;Albania;Europa;8
+Alboran-Perejil, Ilhas;ESP;Alboran-Perejil, Islands;Europa;724
+Alemanha;DEU;Germany;Europa;276
+Alemanha Oriental;DEU;East Germany;Europa;278
+Andorra;AND;Andorra;Europa;20
+Belarus;BLR;Belarus;Europa;112
+Canal, Ilhas do (Guernsey);GGY;Guernsey;Europa;831
+Canárias, Ilhas;ESP;Canary, Islands;Europa;724
+Canal, Ilhas do (Jersey);GBR;Jersey;Europa;826
+Eslovênia;SVN;Slovenia;Europa;705
+Eslováquia;SVK;Slovakia;Europa;703
+Faroe, Ilhas;FRO;Faroe Islands;Europa;234
+Guernsey;GGY;Guernsey;Europa;898
+Inglaterra;GBR;England;Europa;826
+Islândia;ISL;Iceland;Europa;352
+Liechtenstein;LIE;Liechtenstein;Europa;438
+Lituânia;LTU;Lithuania;Europa;440
+Macedônia;MKD;Macedonia;Europa;807
+Madeira, Ilha da;PRT;Madeira;Europa;620
+Moldávia;MDA;Moldova;Europa;498
+Mônaco;MCO;Monaco;Europa;492
+Países Baixos (Holanda);NLD;Netherlands;Europa;528
+Romênia;ROU;Romania;Europa;642
+San Marino;SMR;San Marino;Europa;674
+Sérvia;SRB;Serbia;Europa;688
+Svalbard e Jan Mayen;SJM;Svalbard and Jan Mayen;Europa;744
+Território Antártico Britânico;GBR;British Antarctic Territory;Europa;826
+Ucrânia;UKR;Ukraine;Europa;804
+Vaticano;VAT;Vatican City;Europa;336
+Iugoslávia;SCG;Yugoslavia;Europa;891
+Tchecoslováquia;CSK;Czechoslovakia;Europa;200
+Austrália;AUS;Australia;Oceania;36
+Cocos (Keeling), Ilhas;CCK;Cocos (Keeling) Islands;Oceania;166
+Marshall, Ilhas;MHL;Marshall Islands;Oceania;584
+Nova Caledônia;NCL;New Caledonia;Oceania;540
+Nova Zelândia;NZL;New Zealand;Oceania;554
+Vanuatu;VUT;Vanuatu;Oceania;548
+Tuvalu;TUV;Tuvalu;Oceania;798
+Cook, Ilhas;COK;Cook Islands;Oceania;184
+Guam;GUM;Guam;Oceania;316
+Heard e ilhas mcdonald, Ilha;HMD;"
+Heard Island and McDonald Islands";Oceania;334
+Kiribati;KIR;Kiribati;Oceania;296
+Marianas do Norte, Ilhas;MNP;Northern Marianas;Oceania;580
+Midway, Ilhas;UMI;Midway, Islands;Oceania;581
+Micronésia;FSM;Micronesia;Oceania;583
+Nauru;NRU;Nauru;Oceania;520
+Christmas (Navidad), Ilha;CXR;Christmas Island;Oceania;162
+Niue;NIU;Niue;Oceania;570
+Norfolk, Ilha;NFK;Norfolk Island;Oceania;574
+Papua Nova Guiné;PNG;Papua New Guinea;Oceania;598
+Pacífico, Ilhas do (Administração dos EUA);UMI;Pacific, Islands of (U.S. Administration);Oceania;581
+Pacífico, Ilhas do (EUA);UMI;Pacific Islands (USA);Oceania;581
+Pacífico, Ilhas do (Território Fideicomisso EUA);UMI;Pacifics, Islands of (U.S. trust territory);Oceania;581
+Palau;PLW;Palau;Oceania;585
+Papua, Território de;PNG;Papua territory;Oceania;598
+Pitcairn;PCN;Pitcairn;Oceania;612
+Polinésia Francesa;PYF;French Polynesia;Oceania;258
+Salomão, Ilhas;SLB;Solomon Islands;Oceania;90
+Samoa;WSM;Samoa;Oceania;882
+Samoa Americana;ASM;Americana Samoa;Oceania;16
+Toquelau;TKL;Tokelau;Oceania;772
+Tonga;TON;Tonga;Oceania;776
+Fiji;FJI;Fiji;Oceania;242
+Wallis e Futuna, Ilhas;WLF;Wallis and Futuna;Oceania;876
+Barein;BHR;Bahrein;Oriente Médio;48
+Catar;QAT;Qatar;Oriente Médio;634
+Iraque;IRQ;Iraq;Oriente Médio;368
+Irã;IRN;Iran;Oriente Médio;364
+Jordânia;JOR;Jordan;Oriente Médio;400
+Líbano;LBN;Lebanon;Oriente Médio;422
+Omã;OMN;Oman;Oriente Médio;512
+Jersey;ZZZ;Jersey;Sem informação;898
+Mayotte;ZZZ;Mayotte;Sem informação;898
+São Martinho, Ilha de (parte francesa);ZZZ;São Martinho, Ilha de (parte francesa);Sem informação;898
+Território da Alta Comissão do Pacífico Ocidental;ZZZ;Territory of the High Commissioner of the Western Pacif;Sem informação;898
+União das Repúblicas Socialistas Soviéticas;ZZZ;Union of Soviet Socialist Republics;Sem informação;898
+Provisão de Navios e Aeronaves;ZZZ;Planes and ships provisions;Sem informação;898
+A Designar;ZZZ;To define;Sem informação;898
+Bancos Centrais;ZZZ;Central Banks;Sem informação;898
+Organizações Internacionais;ZZZ;International Organizations;Sem informação;898
+Sem informação;ZZZ;Sem informação;Sem informação;898
+Não Declarados;ZZZ;Not declared;Sem informação;898

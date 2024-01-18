@@ -57,7 +57,8 @@ mod_layout_base.texto_diversos()
 
 # criar abas de Exportação - Comércio - Produção - Processamento - Importação
 
-aba1, aba2, aba3, aba4, aba5 = st.tabs(['Exportação', 'Comércio', 'Produção', 'Processamento', 'Importação'])
+aba1, aba2, aba3, aba4, aba5 = st.tabs(['Exportação', 'Comércio'])
+# aba1, aba2, aba3, aba4, aba5 = st.tabs(['Exportação', 'Comércio', 'Produção', 'Processamento', 'Importação'])
 
 with aba1:
     st.header('Dados de Exportação de vinhos', divider='violet')
@@ -169,16 +170,16 @@ with aba2:
     st.header('Dados de Comércio para avaliações de vinhos', divider='violet')
     st.markdown('**Comércio**: Todos os países que vendem vinhos.')
 
-with aba3:
-    st.header('Dados de Produção de vinhos', divider='violet')
-    st.markdown('**Produção**: Todos os países que produzem vinhos.')
+# with aba3:
+#     st.header('Dados de Produção de vinhos', divider='violet')
+#     st.markdown('**Produção**: Todos os países que produzem vinhos.')
 
-with aba4:
-    st.header('Dados de Processamento de vinhos', divider='violet')
-    st.markdown('**Processamento**: Todos os países que processam vinhos.')
+# with aba4:
+#     st.header('Dados de Processamento de vinhos', divider='violet')
+#     st.markdown('**Processamento**: Todos os países que processam vinhos.')
 
-with aba5:
-    st.header('Dados de Importação de vinhos', divider='violet')
-    st.markdown('**Importação**: Todos os países que importam vinhos.')
+# with aba5:
+#     st.header('Dados de Importação de vinhos', divider='violet')
+#     st.markdown('**Importação**: Todos os países que importam vinhos.')
 
 
