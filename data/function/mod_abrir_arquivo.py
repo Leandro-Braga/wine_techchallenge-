@@ -248,8 +248,12 @@ def destino_origem(df_populacao_geral, df_pais):
     return df_exporta_paisv2
 
 
-def cotacao_dolar():
-    print('nada ainda na cotação.')
+def cotacao_dolar(df_cotacao) -> pd.DataFrame:
+    # Supondo que df_cotacao seja o seu DataFrame
+    df_cotacao['data'] = pd.to_datetime(df_cotacao['data'])
+    df_cotacao = df_cotacao.rename(columns={'data':'Data', 'cotacao_dolar':'Cotação Dólar'})
+    
+    return df_cotacao
 
 # importação
 # @st.cache_data

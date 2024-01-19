@@ -68,7 +68,7 @@ Apresentar o montante de exportação nos últimos 15 anos, destacando análises
 
 st.markdown('**Fonte** - [Dados da Vitivinicultura](https://www.cnpuv.embrapa.br/vitibrazil/index.php?opcao=opt_02)')
 
-aba1, aba2, aba3 = st.tabs(['🚢 Exportação', '💳 Comércio', '📁 Tabela Origem e Destino'])
+aba1, aba2, aba3 = st.tabs(['🚢 Exportação', '📁 Tabela Origem e Destino','💳 Comércio'])
 
 
 with aba1:
@@ -175,31 +175,7 @@ with aba1:
 
 
 with aba2:
-    st.header('Comércio de vinhos', divider='violet')
-    
-    st.markdown('#### **Comércio**:')
 
-
-    st.markdown("""💵 :green[**Dados econômicos**]: Exploração dos fatores econômicos que influenciam as exportações de vinho.
-                Exemplo: Variação da cotação do dólar.""")
-    
-
-    st.markdown('🍷 :violet[**Comercio de vinho**]: Preço mediano por litro.')
-
-    
-    
-    st.markdown('#### **Avaliações de vinhos**:')
-
-
-    st.markdown("""🗺️ :blue[**Exportação de vinho globalmente**]: Os países que tem o maior mercado de vinhos e de varejo do mundo.
-                Demonstrando os países que exportaram o maior valor (US$) de vinhos.""")
-
-    st.markdown("""🍇 :violet[**Tipos de vinhos mais comercializados**]: Consideração das avaliações para entender preferências e tendências de mercado.""")
-
-    
-
-
-with aba3:
     st.header('Tabela de Exportação de vinhos', divider='violet') 
     st.write('- Exporação de vinho, origem (Brasil) e Países de destino.')
 
@@ -219,6 +195,35 @@ with aba3:
 
     st.header(f"Total exportação {df_destino_tabela['Valor'].sum()}")
     st.header(f"Total quantidade {df_destino_tabela['Litros'].sum()}")
+
+
+
+with aba3:
+    st.header('Comércio de vinhos', divider='violet')
+    
+    st.markdown('#### **Comércio**:')
+
+
+    st.markdown("""💵 :green[**Dados econômicos**]: Exploração dos fatores econômicos que influenciam as exportações de vinho.
+                """)
+    
+    df_cotacaov2 = mod_abrir_arquivo.cotacao_dolar(mod_abrir_arquivo.df_cotacao)
+
+    mod_graficos.grafico_cotacao(df_cotacaov2)
+
+    st.markdown('🍷 :violet[**Comercio de vinho**]: Preço mediano por litro.')
+
+    
+    
+    st.markdown('#### **Avaliações de vinhos**:')
+
+
+    st.markdown("""🗺️ :blue[**Exportação de vinho globalmente**]: Os países que tem o maior mercado de vinhos e de varejo do mundo.
+                Demonstrando os países que exportaram o maior valor (US$) de vinhos.""")
+
+    st.markdown("""🍇 :violet[**Tipos de vinhos mais comercializados**]: Consideração das avaliações para entender preferências e tendências de mercado.""")
+
+    
 
 
 

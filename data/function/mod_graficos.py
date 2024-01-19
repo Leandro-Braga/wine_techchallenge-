@@ -200,5 +200,78 @@ def grafico_linha_pais_valor(df_exp_vinho_tab, coluna):
     st.pyplot(plt)
 
 
+def grafico_cotacao(df_cotacao):
+
+    # Criar o gráfico de linha com Plotly Express
+
+    fig = px.line(
+        df_cotacao,
+        x='Data',
+        y='Cotação Dólar',
+        hover_data={'Cotação Dólar': ':$.2f'},
+        markers=True,
+        labels={'Cotação Dólar': 'Cotação do Dólar'},
+        title='Variação da Cotação do Dólar ao Longo dos Anos',
+        line_shape='spline',  # Pode ajustar a curvatura da linha (linear, spline, hv, vh, hvh, vhl)
+        line_dash_sequence=['solid'],  # Pode ajustar o estilo da linha
+        color_discrete_sequence=['#910A67'], # Pode ajustar a cor da linha
+        # text='Cotação Dólar'  
+    )
+
+    # Adicionar título e rótulos dos eixos
+    fig.update_layout(
+        xaxis_title='Ano',
+        yaxis_title='Cotação do Dólar',
+        yaxis_tickprefix='US$ ',  # Adicionar prefixo de dólar nos ticks do eixo Y
+        plot_bgcolor="white",
+
+        # Configurar o tamanho da fonte do título
+        title_font=dict(size=16),
+        
+        # Configurar o tamanho da linha
+        showlegend=True,  # Se quiser que a legenda mostre a correta
+        legend=dict(font=dict(size=16)),  # Tamanho da fonte na legenda
+
+        # Configurar a cor de fundo
+        # paper_bgcolor='#DCF2F1',  # ajustar para a cor desejada
+        # paper_bgcolor='#000000',  # ajustar para a cor desejada
+        
+        # Configurar a cor das linhas do grid no eixo X e Y
+        # xaxis=dict(gridcolor='red'),  # ajustar para a cor desejada
+        # yaxis=dict(gridcolor='#3B3486'),  # ajustar para a cor desejada
+        
+        # Tamanho do gráfico
+        width=1200,
+        height=400,
+
+        # Configurar cor e tamanho da fonte dos rótulos dos eixos
+
+        xaxis=dict( # xaxis=dict(gridcolor='red'),  # ajustar para a cor desejada
+            title=dict(text='Ano', font=dict(size=16, color='#3B3486')),  # Ajustar cor e tamanho
+            tickfont=dict(size=14, color='#3B3486')
+        ),
+
+        yaxis=dict(gridcolor='#3B3486',
+            title=dict(text='Cotação do Dólar', font=dict(size=16, color='#3B3486')),  # Ajustar cor e tamanho
+            tickfont=dict(size=14, color='#3B3486'),
+            tickprefix='US$ ',
+        ),
+    )
+
+    # Configurar o tamanho da linha
+    fig.update_traces(
+        line=dict(width=4),  # ajustar para o tamanho desejado
+        marker=dict(size=8),  # ajustar para o tamanho desejado dos marcadores
+        # Configurar a cor e a fonte do hover_data
+        hoverlabel=dict(
+            bgcolor='#3C0753',  # ajustar para a cor desejada
+            font=dict(family='Arial', size=16, color='white'),  # ajustar para a fonte desejada
+        ),
+    )
+
+    # Exibir o gráfico
+    # fig.show()
+
+    st.plotly_chart(fig)
 
 
