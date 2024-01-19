@@ -39,7 +39,7 @@ def grafico_pais_valortotal(df):
         color='exportação',  # Use a coluna normalizada para o mapeamento de cores
         hover_name='pais',
         hover_data=['valor_total'],
-        color_continuous_scale=['blue', 'yellow', 'red']  # Define a escala de cor do verde para vermelho
+        color_continuous_scale=['blue', 'orange', 'red']  # Define a escala de cor do verde para vermelho
         # color_continuous_scale=['green', 'yellow', 'red']  # Define a escala de cor do verde para vermelho
     )
 

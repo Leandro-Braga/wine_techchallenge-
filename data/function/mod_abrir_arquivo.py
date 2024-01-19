@@ -1,6 +1,11 @@
 import pandas as pd
 import streamlit as st
 
+import warnings
+
+## --- ignorar avisos Pandas --- ##
+warnings.filterwarnings('ignore')
+
 # from streamlit_extras.dataframe_explorer import dataframe_explorer
 
 ## -- Arquivos base -- ##

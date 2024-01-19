@@ -53,15 +53,26 @@ st.set_page_config(
 # Fonte dos textos das abas
 mod_layout_base.texto_diversos()
 
-# sidebar filtro dos paises
 
-# criar abas de Exportação - Comércio - Produção - Processamento - Importação
+st.markdown("""# **Tech Challenge: :violet[Exportação de Vinho]**
 
-aba1, aba2, aba3 = st.tabs(['Exportação', 'Comércio', 'Tabela Origem e Destino'])
-# aba1, aba2, aba3, aba4, aba5 = st.tabs(['Exportação', 'Comércio', 'Produção', 'Processamento', 'Importação'])
+**:blue[Quem somos]:** 
+
+Somos Expert em Data Analytics em uma empresa de exportação de vinhos, responsável por apresentar relatórios iniciais em uma reunião de investidores e acionistas.
+            
+**:blue[Objetivo]:**
+            
+Apresentar o montante de exportação nos últimos 15 anos, destacando análises por país, e fornecer perspectivas futuras com ações recomendadas para aprimorar as exportações. Utilizando de gráficos para facilitar a compreensão, permitindo que investidores e acionistas tomem decisões informadas para impulsionar a empresa.    
+               
+""")
+
+st.markdown('**Fonte** - [Dados da Vitivinicultura](https://www.cnpuv.embrapa.br/vitibrazil/index.php?opcao=opt_02)')
+
+aba1, aba2, aba3 = st.tabs(['🚢 Exportação', '💳 Comércio', '📁 Tabela Origem e Destino'])
+
 
 with aba1:
-    st.header('Dados de Exportação de vinhos', divider='violet')
+    st.header('Exportação de vinhos', divider='violet')
 
     # lendo as tabelas
     df_exp_vinho_tab = mod_abrir_arquivo.exportacao()[0]
@@ -71,7 +82,7 @@ with aba1:
 
     st.markdown("""
         **Tendências de Faturamento**:
-        - 🌍 Países com tonalidades mais :red[avermelhadas] no mapa apresentaram maiores faturamentos com a exportação de vinho.
+        - 🌍 Países com tonalidades :orange[avermelhadas] no mapa apresentam **maiores** faturamentos com a exportação de vinho enquanto os :blue[azulados] **menos**.
 
         **Crescimento da Exportação**:
         - 🍷 O valor da exportação de :violet[vinhos] tem aumentado mundialmente, indicando um crescimento geral no mercado durante o período de 2012 a 2022.
@@ -80,7 +91,6 @@ with aba1:
         - 🔍 Paraguai, Rússia e Estados Unidos lideram em valor de exportações de vinho.
         """)
     
-    st.markdown('Fonte - [Dados da Vitivinicultura](https://www.cnpuv.embrapa.br/vitibrazil/index.php?opcao=opt_02)')
 
     mod_graficos.grafico_pais_valortotal(df_pais_valor)
 
@@ -127,7 +137,7 @@ with aba1:
 
     with col3:
 
-        pais = st.selectbox('Selecione o País:', df_pais_valor_maioresV1['País'].unique())
+        pais = st.selectbox('**Selecione o País:**', df_pais_valor_maioresV1['País'].unique())
 
         valor_pais = df_pais_valor_maioresV1[df_pais_valor_maioresV1['País'] == pais]['Valor Total'].astype(int)
 
@@ -165,12 +175,34 @@ with aba1:
 
 
 with aba2:
-    st.header('Dados de Comércio para avaliações de vinhos', divider='violet')
-    st.markdown('**Comércio**: Todos os países que vendem vinhos.')
+    st.header('Comércio de vinhos', divider='violet')
+    
+    st.markdown('#### **Comércio**:')
+
+
+    st.markdown("""💵 :green[**Dados econômicos**]: Exploração dos fatores econômicos que influenciam as exportações de vinho.
+                Exemplo: Variação da cotação do dólar.""")
+    
+
+    st.markdown('🍷 :violet[**Comercio de vinho**]: Preço mediano por litro.')
+
+    
+    
+    st.markdown('#### **Avaliações de vinhos**:')
+
+
+    st.markdown("""🗺️ :blue[**Exportação de vinho globalmente**]: Os países que tem o maior mercado de vinhos e de varejo do mundo.
+                Demonstrando os países que exportaram o maior valor (US$) de vinhos.""")
+
+    st.markdown("""🍇 :violet[**Tipos de vinhos mais comercializados**]: Consideração das avaliações para entender preferências e tendências de mercado.""")
+
+    
 
 
 with aba3:
-    st.header('Dados referentes a exporação de vinho, origem (Brasil) e Países de destino', divider='violet')
+    st.header('Tabela de Exportação de vinhos', divider='violet') 
+    st.write('- Exporação de vinho, origem (Brasil) e Países de destino.')
+
     st.markdown('**Exportação**: O dados da tabela contem todas as informações sobre a exportação de vinho e os paises de destino.')
 
     df_populacao_geral = mod_abrir_arquivo.populacao_geral_media()
@@ -185,13 +217,9 @@ with aba3:
     # teste = df_destino_tabela[df_destino_tabela['Pais_Ing'].isnull()]['Destino'].unique()
     # st.table(teste)
 
+    st.header(f"Total exportação {df_destino_tabela['Valor'].sum()}")
+    st.header(f"Total quantidade {df_destino_tabela['Litros'].sum()}")
 
-# with aba4:
-#     st.header('Dados de Processamento de vinhos', divider='violet')
-#     st.markdown('**Processamento**: Todos os países que processam vinhos.')
 
-# with aba5:
-#     st.header('Dados de Importação de vinhos', divider='violet')
-#     st.markdown('**Importação**: Todos os países que importam vinhos.')
 
 
