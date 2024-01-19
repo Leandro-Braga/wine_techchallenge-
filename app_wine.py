@@ -57,7 +57,7 @@ mod_layout_base.texto_diversos()
 
 # criar abas de Exportação - Comércio - Produção - Processamento - Importação
 
-aba1, aba2, aba3, aba4, aba5 = st.tabs(['Exportação', 'Comércio'])
+aba1, aba2, aba3 = st.tabs(['Exportação', 'Comércio', 'Tabela Origem e Destino'])
 # aba1, aba2, aba3, aba4, aba5 = st.tabs(['Exportação', 'Comércio', 'Produção', 'Processamento', 'Importação'])
 
 with aba1:
@@ -65,7 +65,7 @@ with aba1:
 
     # lendo as tabelas
     df_exp_vinho_tab = mod_abrir_arquivo.exportacao()[0]
-    df_pais_valor = mod_abrir_arquivo.pais_geral(df_exp_vinho_tab)
+    df_pais_valor = mod_abrir_arquivo.pais_geral_funcao(df_exp_vinho_tab, mod_abrir_arquivo.df_pais)
 
     st.markdown('📊 Gráfico de Países com maior **:blue[exportação]** de **:violet[vinhos]:**')
 
@@ -164,15 +164,27 @@ with aba1:
     mod_graficos.grafico_linha_pais_valor(df_exp_vinho_tab, pais)
 
 
-
-
 with aba2:
     st.header('Dados de Comércio para avaliações de vinhos', divider='violet')
     st.markdown('**Comércio**: Todos os países que vendem vinhos.')
 
-# with aba3:
-#     st.header('Dados de Produção de vinhos', divider='violet')
-#     st.markdown('**Produção**: Todos os países que produzem vinhos.')
+
+with aba3:
+    st.header('Dados referentes a exporação de vinho, origem (Brasil) e Países de destino', divider='violet')
+    st.markdown('**Exportação**: O dados da tabela contem todas as informações sobre a exportação de vinho e os paises de destino.')
+
+    df_populacao_geral = mod_abrir_arquivo.populacao_geral_media()
+    df_destino_tabela = mod_abrir_arquivo.destino_origem(df_populacao_geral, mod_abrir_arquivo.df_pais)
+
+    st.dataframe(df_destino_tabela, hide_index=True,
+                 column_config={'Litros_por_populacao': st.column_config.NumberColumn('Litros_por_populacao', format="U$ %.2f"),
+                                'Preco_por_litro': st.column_config.NumberColumn('Preco_por_litro', format="U$ %.2f"),
+                           "Ano": st.column_config.TextColumn("Ano")})
+                        #    "Ano": st.column_config.TextColumn("Ano"),
+
+    # teste = df_destino_tabela[df_destino_tabela['Pais_Ing'].isnull()]['Destino'].unique()
+    # st.table(teste)
+
 
 # with aba4:
 #     st.header('Dados de Processamento de vinhos', divider='violet')
