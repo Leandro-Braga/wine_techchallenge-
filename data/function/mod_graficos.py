@@ -26,30 +26,40 @@ def billion_formatter(x, pos):
 
 def grafico_pais_valortotal(df):
 
-    # Normalizando os valores para o intervalo [0, 1]
-    df['exportação'] = (df['valor_total'] - 
-                df['valor_total'].min()) / (df['valor_total'].max() - 
-                                            df['valor_total'].min())
-
     # Criando o gráfico de mapa com uma escala de cores contínua
     fig = px.choropleth(
-        df	,
-        locations='pais_ing',  # Esta coluna deve conter nomes de países reconhecíveis por Plotly
+        df,
+        locations='pais_ing',  
         locationmode='country names',
-        color='exportação',  # Use a coluna normalizada para o mapeamento de cores
+        color='valor_total', 
         hover_name='pais',
-        hover_data=['valor_total'],
-        color_continuous_scale=['blue', 'orange', 'red']  # Define a escala de cor do verde para vermelho
-        # color_continuous_scale=['green', 'yellow', 'red']  # Define a escala de cor do verde para vermelho
+        hover_data={'valor_total': ':$.2f'},
+        labels={'valor_total': 'Preço'},
+        color_continuous_scale=['#4682A9', '#F9B572', '#F45050'], 
+        title='Preço Exportação (US$) por Região',
+        color_discrete_sequence=['#910A67'],
     )
-
-    # Mostrar o gráfico
-    # fig.show()
 
     # tamanho do gráfico
     fig.update_layout(
-        width=1400,
+        width=1200,
         height=800,
+        
+        # Configurar o tamanho da fonte do título
+        title_font=dict(size=20),
+        
+        # Configurar o tamanho da linha
+        showlegend=True, 
+        legend=dict(font=dict(size=20)),  # Tamanho da fonte na legenda
+
+    )
+
+    fig.update_traces(
+        # Configurar a cor e a fonte do hover_data
+        hoverlabel=dict(
+            bgcolor='#146C94',  
+            font=dict(family='Arial', size=12, color='white'),  
+        ),
     )
 
     st.plotly_chart(fig)
@@ -273,5 +283,269 @@ def grafico_cotacao(df_cotacao):
     # fig.show()
 
     st.plotly_chart(fig)
+
+
+def grafico_linha_preco_mediano(df_destino_tabela):
+
+    df_aux19 = df_destino_tabela[df_destino_tabela['Preco_por_litro'] > 0].groupby(['Ano'])[['Preco_por_litro']].mean().reset_index().sort_values(by='Ano', ascending=False)
+
+    df_aux19 = df_aux19.rename(columns={'Preco_por_litro': 'Preço por Litro'})
+
+    # st.dataframe(df_aux19)
+
+    fig = px.line(df_aux19, 
+                  x="Ano", 
+                  y="Preço por Litro",
+                  hover_data={'Preço por Litro': ':$.2f'},
+                  markers=True,
+                  labels={'Preço por Litro': 'Preço por Litro'},
+                  title='Preço por Litro Mediano por Ano',
+                  line_shape='spline',
+                  line_dash_sequence=['solid'],
+                  color_discrete_sequence=['#910A67']
+                  )
+
+
+ # Adicionar título e rótulos dos eixos
+    fig.update_layout(
+        xaxis_title='Ano',
+        yaxis_title='Preço por Litro',
+        yaxis_tickprefix='US$ ',  # Adicionar prefixo de dólar nos ticks do eixo Y
+        plot_bgcolor="white",
+
+        # Configurar o tamanho da fonte do título
+        title_font=dict(size=16),
+        
+        # Configurar o tamanho da linha
+        showlegend=True,  # Se quiser que a legenda mostre a correta
+        legend=dict(font=dict(size=16)),  # Tamanho da fonte na legenda
+
+        # Configurar a cor de fundo
+        # paper_bgcolor='#DCF2F1',  # ajustar para a cor desejada
+        # paper_bgcolor='#000000',  # ajustar para a cor desejada
+        
+        # Configurar a cor das linhas do grid no eixo X e Y
+        # xaxis=dict(gridcolor='red'),  # ajustar para a cor desejada
+        # yaxis=dict(gridcolor='#3B3486'),  # ajustar para a cor desejada
+        
+        # Tamanho do gráfico
+        width=1200,
+        height=400,
+
+        # Configurar cor e tamanho da fonte dos rótulos dos eixos
+
+        xaxis=dict( # xaxis=dict(gridcolor='red'),  # ajustar para a cor desejada
+            title=dict(text='Ano', font=dict(size=16, color='#3B3486')),  # Ajustar cor e tamanho
+            tickfont=dict(size=14, color='#3B3486')
+        ),
+
+        yaxis=dict(gridcolor='#3B3486',
+            title=dict(text='Preço por Litro', font=dict(size=16, color='#3B3486')),  # Ajustar cor e tamanho
+            tickfont=dict(size=14, color='#3B3486'),
+            tickprefix='US$ ',
+        ),
+    )
+
+    # Configurar o tamanho da linha
+    fig.update_traces(
+        line=dict(width=4),  # ajustar para o tamanho desejado
+        marker=dict(size=8),  # ajustar para o tamanho desejado dos marcadores
+        # Configurar a cor e a fonte do hover_data
+        hoverlabel=dict(
+            bgcolor='#3C0753',  # ajustar para a cor desejada
+            font=dict(family='Arial', size=16, color='white'),  # ajustar para a fonte desejada
+        ),
+    )
+
+    st.plotly_chart(fig)
+
+
+def grafico_barra_preco_mediano(df_destino_tabela):
+    df_aux20 = df_destino_tabela[df_destino_tabela['Preco_por_litro'] > 0].groupby(['Continente'])[['Preco_por_litro']].mean().reset_index().sort_values(by='Preco_por_litro', ascending=False)
+
+    df_aux20 = df_aux20.rename(columns={'Preco_por_litro': 'Preço por Litro'})
+
+    fig = px.bar(df_aux20, 
+                 x="Continente", 
+                 y="Preço por Litro",
+                 hover_data={'Preço por Litro': ':$.2f'},
+                 labels={'Preço por Litro': 'Preço por Litro'},
+                 title='Preço por Litro (US$) Mediano por Região',
+                 color_discrete_sequence=['#910A67'],
+                                 
+                 )
+    
+    
+ # Adicionar título e rótulos dos eixos
+    fig.update_layout(
+        xaxis_title='Continente',
+        yaxis_title='Preço por Litro',
+        yaxis_tickprefix='US$ ',  # Adicionar prefixo de dólar nos ticks do eixo Y
+        plot_bgcolor="white",
+
+        # Configurar o tamanho da fonte do título
+        title_font=dict(size=16),
+        
+        # Configurar o tamanho da linha
+        showlegend=True,  # Se quiser que a legenda mostre a correta
+        legend=dict(font=dict(size=16)),  # Tamanho da fonte na legenda
+
+        # Configurar a cor de fundo
+        # paper_bgcolor='#DCF2F1',  # ajustar para a cor desejada
+        # paper_bgcolor='#000000',  # ajustar para a cor desejada
+        
+        # Configurar a cor das linhas do grid no eixo X e Y
+        # xaxis=dict(gridcolor='red'),  # ajustar para a cor desejada
+        # yaxis=dict(gridcolor='#3B3486'),  # ajustar para a cor desejada
+        
+        # Tamanho do gráfico
+        width=1200,
+        height=400,
+
+        # Configurar cor e tamanho da fonte dos rótulos dos eixos
+
+        xaxis=dict( # xaxis=dict(gridcolor='red'),  # ajustar para a cor desejada
+            title=dict(text='Continente', font=dict(size=16, color='#3B3486')),  # Ajustar cor e tamanho
+            tickfont=dict(size=14, color='#3B3486')
+        ),
+
+        yaxis=dict(gridcolor='#3B3486',
+            title=dict(text='Preço por Litro', font=dict(size=16, color='#3B3486')),  # Ajustar cor e tamanho
+            tickfont=dict(size=14, color='#3B3486'),
+            tickprefix='US$ ',
+        ),
+    )
+
+    # Configurar o tamanho da linha
+    fig.update_traces(
+        # Configurar a cor e a fonte do hover_data
+        hoverlabel=dict(
+            bgcolor='#3C0753',  # ajustar para a cor desejada
+            font=dict(family='Arial', size=16, color='white'),  # ajustar para a fonte desejada
+        ),
+    )
+
+    st.plotly_chart(fig)
+
+
+def layout_graphs(
+    fig: px,
+    template: str = "seaborn",
+    width: int = 1200,
+    height: int = 500,
+    margin: dict = {"l": 10, "r": 10, "b": 10, "t": 85, "pad": 5},
+    legend: dict = {
+        "orientation": "v",
+        "yanchor": "middle",
+        "xanchor": "center",
+        "x": 1,
+        "y": 0.5,
+        "title": "",
+        "itemsizing": "constant",
+    },
+        
+    xaxis: dict = {"title": ""},
+    yaxis: dict = {"title": ""},
+    hovertemplate: str = "<b>%{x}</b><br>%{y}",
+    title_text = "-",
+    title_sup = "--",
+    marker_color = '',
+    line_color = '',
+    other: dict = dict(),
+) -> None:
+    dic = dict(
+        template=template,
+        width=width,
+        height=height,
+        margin=margin,
+        legend=legend,
+        xaxis=xaxis,
+        yaxis=yaxis,
+        title={
+            'text': f'{title_text}<br><sup style="color: #3B3486; font-weight: normal;">{title_sup}</sup>',
+            'xanchor': 'left',
+            'xref': 'paper',
+            'yanchor': 'auto',
+            'x': 0,
+            'y': .95,
+            'font': {
+                'size': 20,
+                'color': '#3B3486'
+            }
+        },
+    )
+
+    fig.update_layout(dic | other)
+    
+    if marker_color != '':
+        fig.update_traces(marker_color = marker_color)
+    if line_color != '':
+        fig.update_traces(line_color = line_color)
+    
+    fig.update_traces(hovertemplate=hovertemplate)
+
+    return st.plotly_chart(fig)
+
+
+def grafico_mapa_geral(df_destino_tabela):
+
+    df_aux5v2 = df_destino_tabela[df_destino_tabela["Ano"] > 0].groupby(['Continente','ISO_code', 'Destino'])[['Valor']].sum().reset_index().sort_values(by='Continente', ascending=False)
+    
+    var = "Valor"
+
+    fig = px.scatter_geo(
+            df_aux5v2,
+            locations="ISO_code",
+            size=var,
+            color="Continente",
+            projection="natural earth",
+            size_max=30,
+            custom_data=["Destino", var],
+            color_discrete_map={
+                "Oceania": "#636EFA",
+                "América Central e Caribe": "#C70039",
+                "América do Norte": "#362FD9",
+                "África": "#AB63FA",
+                "Europa": "#CD5C08",
+                "Oriente Médio": "#19D3F3",
+                "América do Sul": "#1B4242",
+                "Ásia": "#FF6692",
+            },
+        )
+    
+    fig.update_layout(
+    legend=dict(
+        font=dict(size=16, color="#3C0753"),  # Configurar tamanho e cor da fonte da legenda
+    )
+    )
+
+    # Configurar o tamanho do texto do hover_data
+    fig.update_traces(
+        # Configurar a cor e a fonte do hover_data
+        hoverlabel=dict(
+            bgcolor='#146C94',  
+            font=dict(family='Arial', size=12, color='white'),  
+        ),
+    )
+
+    layout_graphs(
+            fig,
+            yaxis={"title":"Valor Total Exportado (US$)"},
+            xaxis={"title":"Continente"},
+            hovertemplate="<b>%{customdata[0]}</b><br>Total: U$ %{customdata[1]}",
+            legend={
+                "orientation": "h",
+                "yanchor": "middle",
+                "xanchor": "center",
+                "x": 0.5,
+                "y": -0.1,
+                "title": "",
+                "itemsizing": "constant",
+            },
+            title_text="Valor Total Exportado (US$) por País",
+            title_sup="Mapa exibindo o valor total de vinho exportado (em US$) para cada país do mundo"
+    )
+
+
 
 

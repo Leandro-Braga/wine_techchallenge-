@@ -1,5 +1,6 @@
 import pandas as pd
 import streamlit as st
+import numpy as np
 
 import warnings
 
@@ -112,25 +113,32 @@ def exportacao():
 def populacao_geral_media():
 
     ### --- tabela populacao --- ##
+    
+    ### --- tabela populacao --- ##
 
-    filtro_tab = ['Time','ISO3_code', 'TPopulation1Jan', 'MedianAgePop', 'PopDensity', 'PopSexRatio']
+    filtro_tab = ['Time', 'Location', 'ISO3_code', 'TPopulation1Jan', 'MedianAgePop', 'PopDensity', 'PopSexRatio']
     df_populacao_filtro = df_populacao[filtro_tab]
 
     # renomeando colunas
-    df_populacao_filtro.columns = 'ano', 'iso_code', 'populacao', 'idade_mediana', 'densidade_populacional', 'sexo_populacional'
+    df_populacao_filtro.columns = 'ano', 'pais_ing', 'iso_code', 'populacao', 'idade_mediana', 'densidade_populacional', 'sexo_populacional'
 
     # filtro e tratamento dos dados
     df_populacao_geral = df_populacao_filtro[(df_populacao_filtro['iso_code'].notnull()) & (df_populacao_filtro['ano'] < 2023)]
+    df_populacao_geral
 
-    # renomeando colunas
-    df_populacao_geral.columns = ['Ano', 
+    filtro_pais_populacao = ['ano', 'iso_code', 'populacao', 'idade_mediana',
+        'densidade_populacional', 'sexo_populacional']
+    
+    df_populacao_geralv2 = df_populacao_geral[filtro_pais_populacao]
+
+    df_populacao_geralv2.columns = ['Ano', 
                                 'iso_code',
                                 'populacao', 
                                 'idade_mediana', 
                                 'densidade_populacional', 
                                 'sexo_populacional']
-    
-    return df_populacao_geral
+
+    return df_populacao_geralv2
 
 
 def destino_origem(df_populacao_geral, df_pais):
@@ -189,7 +197,9 @@ def destino_origem(df_populacao_geral, df_pais):
     filtro_pais = ['NO_PAIS', 'NO_PAIS_ING', 'CO_PAIS_ISOA3']
 
     df_pais = df_pais[filtro_pais]
+
     df_pais = df_pais.rename(columns={'NO_PAIS':'pais', 'NO_PAIS_ING':'pais_ing', 'CO_PAIS_ISOA3':'iso_code'})
+
     df_pais_continet = pd.merge(df_pais, df_pais_geralv1, how='left', on='pais')
     
     df_pais_continet.fillna('Não Definido', inplace=True) # Retira os NaN da coluna ISO_CODE
@@ -221,16 +231,20 @@ def destino_origem(df_populacao_geral, df_pais):
     df_pais_continet = df_pais_continet.append(df_singapura, ignore_index=True)
 
     df_pais_continet.columns = ['Destino', 'pais_ing', 'iso_code', 'continent']
+
     df_exporta_paisv1 = pd.merge(df_filtrado, df_pais_continet, how='left', on='Destino')
+    
     df_exporta_paisv1['Ano'] = df_exporta_paisv1['Ano'].astype('int64')
     
     df_exporta_paisv2 = pd.merge(df_exporta_paisv1, df_populacao_geral, how='left', on=['Ano', 'iso_code'])
     
-    # Criando as colunas de 'litros por populacao' e 'preco por litro'
     df_exporta_paisv2['Litros_por_populacao'] = df_exporta_paisv2['Litros'] / df_exporta_paisv2['populacao']
-    df_exporta_paisv2['Preco_por_litro'] = df_exporta_paisv2['Valor'] / df_exporta_paisv2['Litros']
+    df_exporta_paisv2['Preco_por_litro'] = round(df_exporta_paisv2['Valor'], 2) / round(df_exporta_paisv2['Litros'], 2)
+
+    df_exporta_paisv2['Preco_por_litro'] = df_exporta_paisv2['Preco_por_litro'].replace([np.inf, -np.inf], np.nan)
 
     df_exporta_paisv2['Preco_por_litro'].fillna(0.0, inplace=True)
+
 
     # Renomeando as colunas e deixando na ordem correta
     df_exporta_paisv2.columns = ['Origem', 'Destino', 'Ano', 'Litros', 'Valor', 'Pais_Ing', 'ISO_code',
@@ -243,7 +257,7 @@ def destino_origem(df_populacao_geral, df_pais):
                               'Litros_por_populacao', 'Preco_por_litro']
 
     # Substituir NaN por 0.0 nas colunas especificadas
-    df_exporta_paisv2[colunas_substituir_nan] = df_exporta_paisv2[colunas_substituir_nan].fillna(0.0)
+    df_exporta_paisv2[colunas_substituir_nan] = df_exporta_paisv2[colunas_substituir_nan].fillna(0.00)
 
     return df_exporta_paisv2
 
@@ -254,6 +268,8 @@ def cotacao_dolar(df_cotacao) -> pd.DataFrame:
     df_cotacao = df_cotacao.rename(columns={'data':'Data', 'cotacao_dolar':'Cotação Dólar'})
     
     return df_cotacao
+
+
 
 # importação
 # @st.cache_data

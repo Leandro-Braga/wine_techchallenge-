@@ -196,30 +196,44 @@ with aba2:
     st.header(f"Total exportação {df_destino_tabela['Valor'].sum()}")
     st.header(f"Total quantidade {df_destino_tabela['Litros'].sum()}")
 
+    # df_destino_tabela['Ano'] = df_destino_tabela['Ano'].astype(int)
+    # teste = df_destino_tabela[(df_destino_tabela['Preco_por_litro'] >= 0) & (df_destino_tabela['Ano'] == 2020)].groupby('Ano')[['Preco_por_litro']].mean()
+    # st.dataframe(teste)
+
+
 
 
 with aba3:
     st.header('Comércio de vinhos', divider='violet')
     
-    st.markdown('#### **Comércio**:')
+    # st.markdown('#### **Comércio**:')
 
 
-    st.markdown("""💵 :green[**Dados econômicos**]: Exploração dos fatores econômicos que influenciam as exportações de vinho.
+    st.markdown("""#### 💵 :green[**Dados econômicos**]: Exploração dos fatores econômicos que influenciam as exportações de vinho.
                 """)
     
     df_cotacaov2 = mod_abrir_arquivo.cotacao_dolar(mod_abrir_arquivo.df_cotacao)
 
     mod_graficos.grafico_cotacao(df_cotacaov2)
 
-    st.markdown('🍷 :violet[**Comercio de vinho**]: Preço mediano por litro.')
+    st.markdown('#### 🍷 :violet[**Comercio de vinho**]: Preço mediano por litro.')
+    
+    grafico = st.radio('**Selecione a visualização do preço mediano:**', ('Ano', 'Região'))
 
-    
-    
+    if grafico == 'Ano':
+        mod_graficos.grafico_linha_preco_mediano(df_destino_tabela)
+    elif grafico == 'Região':
+        mod_graficos.grafico_barra_preco_mediano(df_destino_tabela)
+
+    st.divider()
+
     st.markdown('#### **Avaliações de vinhos**:')
 
 
     st.markdown("""🗺️ :blue[**Exportação de vinho globalmente**]: Os países que tem o maior mercado de vinhos e de varejo do mundo.
                 Demonstrando os países que exportaram o maior valor (US$) de vinhos.""")
+    
+    mod_graficos.grafico_mapa_geral(df_destino_tabela)
 
     st.markdown("""🍇 :violet[**Tipos de vinhos mais comercializados**]: Consideração das avaliações para entender preferências e tendências de mercado.""")
 
