@@ -184,17 +184,37 @@ with aba2:
     df_populacao_geral = mod_abrir_arquivo.populacao_geral_media()
     df_destino_tabela = mod_abrir_arquivo.destino_origem(df_populacao_geral, mod_abrir_arquivo.df_pais)
 
-    st.dataframe(df_destino_tabela, hide_index=True,
-                 column_config={'Litros_por_populacao': st.column_config.NumberColumn('Litros_por_populacao', format="U$ %.2f"),
-                                'Preco_por_litro': st.column_config.NumberColumn('Preco_por_litro', format="U$ %.2f"),
-                           "Ano": st.column_config.TextColumn("Ano")})
+    df_destino_tabela_config = df_destino_tabela
+
+    df_destino_tabela_config.columns = ['País de Origem',
+                                        'País de Destino',
+                                        'Ano Exportação',
+                                        'Vinho Exportado (Litros)',
+                                        'Valor Exportado (US$)',
+                                        'Pais de Destino Inglês',
+                                        'ISO_code',
+                                        'Continente',
+                                        'População do País',
+                                        'Idade Média do País',
+                                        'Densidade Populacional',
+                                        'Razão de Sexo do País',
+                                        'Litros por População',
+                                        'Preço do Vinho (US$/Litro)']
+    
+
+    mod_layout_base.selecao_dataframe(df_destino_tabela_config)
+
+    # st.dataframe(df_destino_tabela, hide_index=True,
+    #              column_config={'Litros_por_populacao': st.column_config.NumberColumn('Litros_por_populacao', format="U$ %.2f"),
+    #                             'Preco_por_litro': st.column_config.NumberColumn('Preco_por_litro', format="U$ %.2f"),
+    #                        "Ano": st.column_config.TextColumn("Ano")})
                         #    "Ano": st.column_config.TextColumn("Ano"),
 
     # teste = df_destino_tabela[df_destino_tabela['Pais_Ing'].isnull()]['Destino'].unique()
     # st.table(teste)
 
-    st.header(f"Total exportação {df_destino_tabela['Valor'].sum()}")
-    st.header(f"Total quantidade {df_destino_tabela['Litros'].sum()}")
+    # st.header(f"Total exportação {df_destino_tabela['Valor'].sum()}")
+    # st.header(f"Total quantidade {df_destino_tabela['Litros'].sum()}")
 
     # df_destino_tabela['Ano'] = df_destino_tabela['Ano'].astype(int)
     # teste = df_destino_tabela[(df_destino_tabela['Preco_por_litro'] >= 0) & (df_destino_tabela['Ano'] == 2020)].groupby('Ano')[['Preco_por_litro']].mean()
@@ -212,6 +232,7 @@ with aba3:
     st.markdown("""#### 💵 :green[**Dados econômicos**]: Exploração dos fatores econômicos que influenciam as exportações de vinho.
                 """)
     
+    df_destino_tabela = mod_abrir_arquivo.destino_origem(df_populacao_geral, mod_abrir_arquivo.df_pais)
     df_cotacaov2 = mod_abrir_arquivo.cotacao_dolar(mod_abrir_arquivo.df_cotacao)
 
     mod_graficos.grafico_cotacao(df_cotacaov2)
