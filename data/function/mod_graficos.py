@@ -547,5 +547,184 @@ def grafico_mapa_geral(df_destino_tabela):
     )
 
 
+def grafico_linha_comercio(dfcomercio, coluna):
+
+    if coluna == 'Ano':
+        fig = px.line(
+            dfcomercio,
+            x="Ano",
+            y=dfcomercio.columns[1:],
+            title=f'Vendas por Ano',
+            color_discrete_sequence=px.colors.qualitative.Plotly,
+            markers=True,
+        )
+        # Adicionar título e rótulos dos eixos
+        fig.update_layout(
+            xaxis_title='Ano',
+            yaxis_title='Vendas por Ano',
+            yaxis_tickprefix='US$ ',  # Adicionar prefixo de dólar nos ticks do eixo Y
+            plot_bgcolor="white",
+
+            # Configurar o tamanho da fonte do título
+            title_font=dict(size=16),
+            
+            # Configurar o tamanho da linha
+            showlegend=True,  # Se quiser que a legenda mostre a correta
+
+            legend=dict(
+            title=dict(text="Tipos de Vinhos", font=dict(size=16, color="#3B3486")),  # Configurar título da legenda
+            font=dict(size=14, color="#3B3486"),  # Configurar tamanho e cor da fonte da legenda
+            ),
+            
+            # Tamanho do gráfico
+            width=1200,
+            height=400,
+
+            # Configurar cor e tamanho da fonte dos rótulos dos eixos
+            xaxis=dict( # xaxis=dict(gridcolor='red'),  # ajustar para a cor desejada
+                title=dict(text='Ano', font=dict(size=16, color='#3B3486')),  
+                tickfont=dict(size=14, color='#3B3486')
+            ),
+
+            yaxis=dict(gridcolor='#3B3486',
+                title=dict(text='Vendas por Ano', font=dict(size=16, color='#3B3486')),  
+                tickfont=dict(size=14, color='#3B3486'),
+                tickprefix='US$ ',
+            ),
+        )
+
+        # Configurar o tamanho da linha
+        fig.update_traces(
+            line=dict(width=4),  
+            marker=dict(size=8),  
+            # Configurar a cor e a fonte do hover_data
+            hoverlabel=dict(
+                bgcolor='#3C0753',  
+                font=dict(family='Arial', size=16, color='white'), 
+            ),
+        )
+    else:
+        # Gráfico de Linha por Ano
+        fig = px.line(dfcomercio, 
+                            x='Ano', 
+                            y=coluna, 
+                            title=f'Vendas de {coluna} por Ano',
+                            hover_data={coluna: ':$.2f'},
+                            markers=True,
+                            line_shape='spline',
+                            line_dash_sequence=['solid'],
+                            color_discrete_sequence=['#910A67']
+                            
+                            )
+
+        # Adicionar título e rótulos dos eixos
+        fig.update_layout(
+            xaxis_title='Ano',
+            yaxis_title='Vendas por Ano',
+            yaxis_tickprefix='US$ ',  # Adicionar prefixo de dólar nos ticks do eixo Y
+            plot_bgcolor="white",
+
+            # Configurar o tamanho da fonte do título
+            title_font=dict(size=16),
+            
+            # Configurar o tamanho da linha
+            showlegend=True,  # Se quiser que a legenda mostre a correta
+            legend=dict(font=dict(size=16)),  # Tamanho da fonte na legenda
+            
+            # Tamanho do gráfico
+            width=1200,
+            height=400,
+
+            # Configurar cor e tamanho da fonte dos rótulos dos eixos
+            xaxis=dict( # xaxis=dict(gridcolor='red'),  # ajustar para a cor desejada
+                title=dict(text='Ano', font=dict(size=16, color='#3B3486')),  
+                tickfont=dict(size=14, color='#3B3486')
+            ),
+
+            yaxis=dict(gridcolor='#3B3486',
+                title=dict(text='Vendas por Ano', font=dict(size=16, color='#3B3486')),  
+                tickfont=dict(size=14, color='#3B3486'),
+                tickprefix='US$ ',
+            ),
+        )
+
+        # Configurar o tamanho da linha
+        fig.update_traces(
+            line=dict(width=4),  
+            marker=dict(size=8),  
+            # Configurar a cor e a fonte do hover_data
+            hoverlabel=dict(
+                bgcolor='#3C0753',  
+                font=dict(family='Arial', size=16, color='white'), 
+            ),
+        )
+
+    st.plotly_chart(fig)
+
+
+
+def grafico_barra_comercio(dfcomercio):
+    ## ajustes para o gráfico de barras ##
+    dfcomerciov5 = dfcomercio.drop(columns=['Ano'])
+    dfcomerciov6 = dfcomerciov5.T
+    dfcomerciov6['Total'] = dfcomerciov6.sum(axis=1)
+    dfcomerciov7 = dfcomerciov6.reset_index()
+    dfcomerciov7 = dfcomerciov7.rename(columns={'index':'Vinhos'})
+    filtro_tab = ['Vinhos', 'Total']
+    dfcomerciov8 = dfcomerciov7[filtro_tab].sort_values(by='Total', ascending=False)
+
+    # Gráfico de Barras por Tipo de Vinho
+    fig = px.bar(dfcomerciov8, 
+                 x='Vinhos', 
+                 y='Total', 
+                 labels={'Total': 'Preço Total'},
+                 title='Vendas de Vinho de Mesa por Ano',
+                 color_discrete_sequence=['#910A67'])
+    
+     
+    # Adicionar título e rótulos dos eixos
+    fig.update_layout(
+        xaxis_title='Vinhos',
+        yaxis_title='Preço Total',
+        yaxis_tickprefix='US$ ',  # Adicionar prefixo de dólar nos ticks do eixo Y
+        plot_bgcolor="white",
+
+        # Configurar o tamanho da fonte do título
+        title_font=dict(size=16),
+        
+        # Configurar o tamanho da linha
+        showlegend=True,
+        legend=dict(font=dict(size=16)),  
+
+        # Tamanho do gráfico
+        width=1200,
+        height=400,
+
+        # Configurar cor e tamanho da fonte dos rótulos dos eixos
+
+        xaxis=dict(
+            title=dict(text='Vinhos', font=dict(size=16, color='#3B3486')),  
+            tickfont=dict(size=14, color='#3B3486')
+        ),
+
+        yaxis=dict(gridcolor='#3B3486',
+            title=dict(text='Preço Total', font=dict(size=16, color='#3B3486')),  
+            tickfont=dict(size=14, color='#3B3486'),
+            tickprefix='US$ ',
+        ),
+    )
+
+    # Configurar o tamanho da linha
+    fig.update_traces(
+        # Configurar a cor e a fonte do hover_data
+        hoverlabel=dict(
+            bgcolor='#3C0753',  # ajustar para a cor desejada
+            font=dict(family='Arial', size=16, color='white'),  # ajustar para a fonte desejada
+        ),
+    )
+
+    st.plotly_chart(fig)
+
+
 
 

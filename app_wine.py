@@ -237,6 +237,20 @@ with aba3:
 
     st.markdown("""🍇 :violet[**Tipos de vinhos mais comercializados**]: Consideração das avaliações para entender preferências e tendências de mercado.""")
 
+    dfcomercio = mod_abrir_arquivo.comercializacao()
+
+    # dfcoluna = dfcomercio.drop(columns=['Ano'])
+    dfcoluna = dfcomercio
+
+    # st.dataframe(dfcoluna.columns)
+
+    coluna = grafico = st.radio('**Selecione o Tipo de Vinho:**', (dfcoluna.columns))
+
+    mod_graficos.grafico_linha_comercio(dfcomercio, coluna)
+
+    st.divider()
+
+    mod_graficos.grafico_barra_comercio(dfcomercio)
     
 
 

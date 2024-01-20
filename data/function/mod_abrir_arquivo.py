@@ -300,10 +300,30 @@ def producao_geral():
 
 
 # Comercialização
-# @st.cache_data
+@st.cache_data
 def comercializacao():
     df_comercio = pd.read_csv(comercio, delimiter=';')
-    return df_comercio
+
+    # -- inicio da tabela de Comercio de Vinho -- #
+    df_comerciov1 = df_comercio.drop(columns={'0', 'ANO'})
+
+    # Filtrar colunas de quantidade e valor
+    colunas_qtde = [col for col in df_comerciov1.columns if not col.endswith('.1')]
+    df_comerciov1 = df_comerciov1.rename(columns={'ANO.1':'Ano'})
+    df_comerciov1 = df_comerciov1.set_index('Ano')
+    dfcomerciov2 = df_comerciov1.T
+    filtro_coluna = ['VINHO DE MESA','VINHO  FINO DE MESA','VINHO FRIZANTE','VINHO ORGÂNICO','VINHO ESPECIAL']
+    dfcomerciov3 = dfcomerciov2[filtro_coluna]
+    
+    dfcomerciov4 = dfcomerciov3.reset_index()
+    dfcomerciov4.columns = ['Ano', 
+                            'Vinho de Mesa', 
+                            'Vinho Finho de Mesa', 
+                            'Vinho Frizante', 
+                            'Vinho Orgânico', 
+                            'Vinho Especial']
+
+    return dfcomerciov4
 
 
 # base país
