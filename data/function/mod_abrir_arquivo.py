@@ -64,7 +64,7 @@ df_populacao = pd.read_csv(populacao, delimiter=',')
 # base cotação dolar
 df_cotacao = pd.read_excel(cotacao)
 
-# Exportação
+
 @st.cache_data
 def exportacao():
 
@@ -110,6 +110,7 @@ def exportacao():
     return df_exp_vinho_tab, df_exp_espumante, df_exp_suco, df_exp_uva
 
 
+@st.cache_data
 def populacao_geral_media():
 
     ### --- tabela populacao --- ##
@@ -141,6 +142,7 @@ def populacao_geral_media():
     return df_populacao_geralv2
 
 
+@st.cache_data
 def destino_origem(df_populacao_geral, df_pais):
 
     # -- inicio da tabela de destino e origem com o 'df_exp_vinho' exportação -- #
@@ -262,6 +264,7 @@ def destino_origem(df_populacao_geral, df_pais):
     return df_exporta_paisv2
 
 
+@st.cache_data
 def cotacao_dolar(df_cotacao) -> pd.DataFrame:
     # Supondo que df_cotacao seja o seu DataFrame
     df_cotacao['data'] = pd.to_datetime(df_cotacao['data'])
@@ -327,7 +330,7 @@ def comercializacao():
 
 
 # base país
-# @st.cache_data
+@st.cache_data
 def pais_geral_funcao(df_exp_vinho_tab, df_pais):
 
     # df_pais = pd.read_csv(pais, delimiter=';', encoding='latin-1')
