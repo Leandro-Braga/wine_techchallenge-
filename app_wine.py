@@ -58,11 +58,11 @@ mod_layout_base.texto_diversos()
 
 st.markdown("""# **Tech Challenge: :violet[Exportação de Vinho]**
 
-**:blue[Quem somos]:** 
+**:violet[Quem somos]:** 
 
 - Somos Expert em Data Analytics em uma empresa de exportação de vinhos, responsável por apresentar relatórios iniciais em uma reunião de investidores e acionistas.
             
-**:blue[Objetivo]:**
+**:violet[Objetivo]:**
             
 - Apresentar o montante de exportação nos últimos 15 anos, destacando análises por país, e fornecer perspectivas futuras com ações recomendadas para aprimorar as exportações. Utilizando de gráficos para facilitar a compreensão, permitindo que investidores e acionistas tomem decisões informadas para impulsionar a empresa.    
                
@@ -215,7 +215,7 @@ with aba3:
 
     st.divider()
 
-    st.markdown('#### 🍷 :violet[**Comercio de vinho:**]')
+    st.markdown('#### 🍷 :violet[**Comércio de vinho:**]')
     
     col3, col4 = st.columns(2)
 
