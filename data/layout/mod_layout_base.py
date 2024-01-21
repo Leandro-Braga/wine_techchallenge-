@@ -1,6 +1,4 @@
 import streamlit as st
-# from streamlit_extras.metric_cards import style_metric_cards
-# from streamlit_extras.stylable_container import stylable_container
 from streamlit_extras.row import row
 
 
@@ -39,6 +37,24 @@ def texto_diversos():
         </style>
         """,
         unsafe_allow_html=True)
+
+
+def descricao_texto(text: str) -> None:
+    st.markdown(
+        f"""
+        <div style="background: #F7F7F7; padding: 20px 25px 10px 20px; border-radius: 6px; border: 1px solid #121212; margin-bottom: 100px">
+            <p style="text-align: left; font-size:16px; color: #121212">
+                💻 Pesquisa
+            </p>
+            <p style="text-align: left;">
+                {text}
+            </p>
+        </div>
+        """,
+        unsafe_allow_html=True,
+    )
+
+    return None
 
 
 def selecao_dataframe(df):

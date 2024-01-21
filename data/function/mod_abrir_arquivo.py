@@ -1,13 +1,11 @@
+import warnings
+
+import numpy as np
 import pandas as pd
 import streamlit as st
-import numpy as np
-
-import warnings
 
 ## --- ignorar avisos Pandas --- ##
 warnings.filterwarnings('ignore')
-
-# from streamlit_extras.dataframe_explorer import dataframe_explorer
 
 ## -- Arquivos base -- ##
 

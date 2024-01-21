@@ -1,7 +1,5 @@
 import matplotlib.pyplot as plt
-# import pandas as pd
 import plotly.express as px
-# import pydeck as pdk
 import seaborn as sns
 import streamlit as st
 from matplotlib.ticker import FuncFormatter
@@ -79,7 +77,7 @@ def grafico_ano_barra(df):
         media_gastos = df['total_geral'].mean()
 
         # Criando o gráfico com a linha de média e rótulos de valor
-        plt.figure(figsize=(14, 5))
+        plt.figure(figsize=(10, 3))
         sns.barplot(x=df.index, y=df['total_geral'], palette="viridis")
 
         if len(df) > 1:
@@ -87,27 +85,23 @@ def grafico_ano_barra(df):
                     color='red', ha="right", va="bottom")
             plt.axhline(media_gastos, color='red', linestyle='--')
 
-        plt.title('Total de Exportação por Ano', fontsize=16)
-        plt.xlabel('Ano', fontsize=10)
-        plt.ylabel('Total', fontsize=10)
+        plt.title('Total de Exportação por Ano', fontsize=10)
+        plt.xlabel('Ano', fontsize=8)
+        plt.ylabel('Total', fontsize=8)
         plt.xticks(rotation=45)
+
+        # Alterando o tamanho dos rótulos nos eixos X e Y
+        plt.tick_params(axis='both', which='major', labelsize=7)
         
         # Alterando a cor de fundo do grid
         # plt.grid(True, color='#f0f0f0')
 
         # Alterando a cor de fundo do espaço do gráfico
-        plt.gca().set_facecolor('#F3F8FF')
+        # plt.gca().set_facecolor('#F3F8FF')
+        plt.gca().set_facecolor('white')
 
         plt.grid(True, axis='y', linestyle='--', linewidth=0.7, color='gray')
         
-
-        # Adicionando rótulos de valor nas barras
-
-        # for index, value in df['total_geral'].items():
-        #     plt.text(index, value, formatar_como_moeda(value, milao), color='black', ha="center", va="bottom")
-        # for index, value in enumerate(df['total_geral']):
-        #         plt.text(index, value, f'{formatar_como_moeda(value, milao)}', color='black', ha="center", va="bottom")
-
         # Função para formatar
         plt.gca().yaxis.set_major_formatter(FuncFormatter(billion_formatter))
 
@@ -122,97 +116,164 @@ def grafico_ano_barra(df):
         st.warning('Atualizar a página!')
 
 
-
 def grafico_linha_pais_qtd(df_exp_vinho_tab, coluna):
-
-    milao = 1000000
 
     df_qtd = df_exp_vinho_tab.loc[df_exp_vinho_tab['classe'] == 'quantidade'][[coluna]]
 
-    # Convertendo os índices para inteiros
-    df_qtd.index = df_qtd.index.map(int)
+    df_qtd = df_qtd.reset_index()
+    df_qtd = df_qtd.rename(columns={'index':'Ano'})
 
-    # Criando o gráfico novamente com a formatação personalizada no eixo Y
-    plt.figure(figsize=(14, 5))
-    plt.plot(df_qtd.index, df_qtd[coluna], color='darkred', marker='o')
+    # Criar o gráfico de linha com Plotly Express
+    fig = px.line(
+        df_qtd,
+        x='Ano',
+        y=coluna,
+        hover_data=coluna,
+        markers=True,
+        labels={coluna: coluna},
+        title=f'Exportações por Quantidade de Vinhos do {coluna} (1970-2022)',
+        line_shape='spline',  # curvatura da linha (linear, spline, hv, vh, hvh, vhl)
+        line_dash_sequence=['solid'],  # estilo da linha
+        color_discrete_sequence=['#910A67'], # cor da linha
+        # text='cotacao_dolar' ## - Rotulos por coluna 
+    )
 
-    plt.title(f'Exportações por Quantidade de Vinhos do {coluna} (1970-2022)', fontsize=14)
-    plt.xlabel('Ano', fontsize=12)
-    plt.ylabel('Exportações', fontsize=12)
 
-    plt.xticks(range(df_qtd.index.min(), df_qtd.index.max()+1, 2), rotation=45)
+    # Adicionar título e rótulos dos eixos
+    fig.update_layout(
+        xaxis_title='Ano',
+        yaxis_title=coluna,
+        yaxis_tickprefix='US$ ',  # Adicionar prefixo de dólar
+        plot_bgcolor="white",
 
-    # Aplicando a função de formatação ao eixo Y
-    plt.gca().get_yaxis().set_major_formatter(plt.FuncFormatter(lambda x, loc: formatar_como_quantidade(x, milao)))
+        # Configurar o tamanho da fonte do título
+        title_font=dict(size=18),
+        
+        # Configurar o tamanho da linha
+        showlegend=True,  
+        legend=dict(font=dict(size=16)),  # Tamanho da fonte na legenda
 
-    plt.grid(True)
-    # plt.grid(True, axis='x', linestyle='--', linewidth=0.7, color='gray')
+        # Configurar a cor de fundo
+        # paper_bgcolor='#DCF2F1',
+        # paper_bgcolor='#000000',
+        
+        # Configurar a cor das linhas do grid no eixo X e Y
+        # xaxis=dict(gridcolor='red'),
+        # yaxis=dict(gridcolor='#3B3486'),
+        
+        # Tamanho do gráfico
+        width=900,
+        height=400,
 
-    # Alterando a cor de fundo do grid
-    plt.grid(True, color='#F5EEE6')
+        # Configurar cor e tamanho da fonte dos rótulos dos eixos
 
-    # Alterando a cor de fundo do espaço do gráfico
-    plt.gca().set_facecolor('#F3F8FF')
-    # plt.gca().set_facecolor('#f8f8f8')
-    # plt.gca().set_facecolor('#E6A4B4')
-    plt.grid(True, axis='y', linestyle='--', linewidth=0.7, color='gray')
+        xaxis=dict( # xaxis=dict(gridcolor='red'), 
+            title=dict(text='Ano', font=dict(size=16, color='#3B3486')), 
+            tickfont=dict(size=14, color='#3B3486')
+        ),
 
-    ax = plt.gca()
-    ax.spines['top'].set_visible(False)
-    ax.spines['right'].set_visible(False)
+        yaxis=dict(gridcolor='#3B3486',
+            title=dict(text="Quantidade", font=dict(size=16, color='#3B3486')), 
+            tickfont=dict(size=14, color='#3B3486'),
+            tickprefix='US$ ',
+        ),
+    )
 
-    plt.tight_layout()
-    # plt.show()
-    st.pyplot(plt)
+    # Configurar o tamanho da linha
+    fig.update_traces(
+        line=dict(width=4),  
+        marker=dict(size=8), 
+        # Configurar a cor e a fonte do hover_data
+        hoverlabel=dict(
+            bgcolor='#3C0753',  
+            font=dict(family='Arial', size=16, color='white'),
+        ),
+    )
 
+    st.plotly_chart(fig)
 
 
 def grafico_linha_pais_valor(df_exp_vinho_tab, coluna):
 
-    milao = 1000000
-
+    # df_qtd = df_exp_vinho_tab.loc[df_exp_vinho_tab['classe'] == 'quantidade'][[coluna]]
     df_valor = df_exp_vinho_tab.loc[df_exp_vinho_tab['classe'] == 'valor'][[coluna]]
 
-    # Convertendo os índices para inteiros
-    df_valor.index = df_valor.index.map(int)
+    df_valor = df_valor.reset_index()
+    df_valor = df_valor.rename(columns={'index':'Ano'})
 
-    # Criando o gráfico novamente com a formatação personalizada no eixo Y
-    plt.figure(figsize=(14, 5))
-    plt.plot(df_valor.index, df_valor[coluna], color='darkred', marker='o')
+    # st.dataframe(df_valor)
 
-    plt.title(f'Exportações por Valor de Vinhos do {coluna} (1970-2022)', fontsize=14)
-    plt.xlabel('Ano', fontsize=12)
-    plt.ylabel('Exportações', fontsize=12)
+    # Criar o gráfico de linha com Plotly Express
+    fig = px.line(
+        df_valor,
+        x='Ano',
+        y=coluna,
+        hover_data=coluna,
+        markers=True,
+        labels={coluna: coluna},
+        title=f'Exportações por Valor de Vinhos do {coluna} (1970-2022)',
+        line_shape='spline',  # curvatura da linha (linear, spline, hv, vh, hvh, vhl)
+        line_dash_sequence=['solid'],  # estilo da linha
+        color_discrete_sequence=['#910A67'], # cor da linha
+        # text='cotacao_dolar'  
+    )
 
-    plt.xticks(range(df_valor.index.min(), df_valor.index.max()+1, 2), rotation=45)
+    # Adicionar título e rótulos dos eixos
+    fig.update_layout(
+        xaxis_title='Ano',
+        yaxis_title=coluna,
+        yaxis_tickprefix='US$ ',  # Adicionar prefixo de dólar 
+        plot_bgcolor="white",
 
-    # Aplicando a função de formatação ao eixo Y
-    plt.gca().get_yaxis().set_major_formatter(plt.FuncFormatter(lambda x, loc: formatar_como_moeda(x, milao)))
+        # Configurar o tamanho da fonte do título
+        title_font=dict(size=18),
+        
+        # Configurar o tamanho da linha
+        showlegend=True,  # mostre a correta
+        legend=dict(font=dict(size=16)),  # Tamanho da fonte na legenda
 
-    plt.grid(True)
-    # plt.grid(True, axis='x', linestyle='--', linewidth=0.7, color='gray')
+        # Configurar a cor de fundo
+        # paper_bgcolor='#DCF2F1',  
+        # paper_bgcolor='#000000',  
+        
+        # Configurar a cor das linhas do grid no eixo X e Y
+        # xaxis=dict(gridcolor='red'),  
+        # yaxis=dict(gridcolor='#3B3486'),  
+        
+        # Tamanho do gráfico
+        width=900,
+        height=400,
 
-    # Alterando a cor de fundo do grid
-    plt.grid(True, color='#F5EEE6')
+        # Configurar cor e tamanho da fonte dos rótulos dos eixos
 
-    # Alterando a cor de fundo do espaço do gráfico
-    plt.gca().set_facecolor('#F3F8FF')
-    # plt.gca().set_facecolor('#f8f8f8')
-    # plt.gca().set_facecolor('#E6A4B4')
-    plt.grid(True, axis='y', linestyle='--', linewidth=0.7, color='gray')
+        xaxis=dict( # xaxis=dict(gridcolor='red'),  
+            title=dict(text='Ano', font=dict(size=16, color='#3B3486')),  
+            tickfont=dict(size=14, color='#3B3486')
+        ),
 
-    ax = plt.gca()
-    ax.spines['top'].set_visible(False)
-    ax.spines['right'].set_visible(False)
+        yaxis=dict(gridcolor='#3B3486',
+            title=dict(text='Exportações', font=dict(size=16, color='#3B3486')),  
+            tickfont=dict(size=14, color='#3B3486'),
+            tickprefix='US$ ',
+        ),
+    )
 
-    plt.tight_layout()
-    # plt.show()
-    st.pyplot(plt)
+    # Configurar o tamanho da linha
+    fig.update_traces(
+        line=dict(width=4),  
+        marker=dict(size=8),
+
+        # Configurar a cor e a fonte do hover_data
+        hoverlabel=dict(
+            bgcolor='#3C0753',
+            font=dict(family='Arial', size=16, color='white'),
+        ),
+    )
+
+    st.plotly_chart(fig)
 
 
 def grafico_cotacao(df_cotacao):
-
-    # Criar o gráfico de linha com Plotly Express
 
     fig = px.line(
         df_cotacao,
@@ -222,9 +283,9 @@ def grafico_cotacao(df_cotacao):
         markers=True,
         labels={'Cotação Dólar': 'Cotação do Dólar'},
         title='Variação da Cotação do Dólar ao Longo dos Anos',
-        line_shape='spline',  # Pode ajustar a curvatura da linha (linear, spline, hv, vh, hvh, vhl)
-        line_dash_sequence=['solid'],  # Pode ajustar o estilo da linha
-        color_discrete_sequence=['#910A67'], # Pode ajustar a cor da linha
+        line_shape='spline',  # a curvatura da linha (linear, spline, hv, vh, hvh, vhl)
+        line_dash_sequence=['solid'],  # o estilo da linha
+        color_discrete_sequence=['#910A67'], # a cor da linha
         # text='Cotação Dólar'  
     )
 
@@ -232,37 +293,38 @@ def grafico_cotacao(df_cotacao):
     fig.update_layout(
         xaxis_title='Ano',
         yaxis_title='Cotação do Dólar',
-        yaxis_tickprefix='US$ ',  # Adicionar prefixo de dólar nos ticks do eixo Y
+        yaxis_tickprefix='US$ ',  # Adicionar prefixo de dólar
         plot_bgcolor="white",
 
         # Configurar o tamanho da fonte do título
-        title_font=dict(size=16),
+        title_font=dict(size=18),
         
         # Configurar o tamanho da linha
-        showlegend=True,  # Se quiser que a legenda mostre a correta
+        showlegend=True,  # a legenda mostre a correta
         legend=dict(font=dict(size=16)),  # Tamanho da fonte na legenda
 
         # Configurar a cor de fundo
-        # paper_bgcolor='#DCF2F1',  # ajustar para a cor desejada
-        # paper_bgcolor='#000000',  # ajustar para a cor desejada
+        # paper_bgcolor='#DCF2F1',  
+        # paper_bgcolor='#000000',  
         
         # Configurar a cor das linhas do grid no eixo X e Y
-        # xaxis=dict(gridcolor='red'),  # ajustar para a cor desejada
-        # yaxis=dict(gridcolor='#3B3486'),  # ajustar para a cor desejada
+        # xaxis=dict(gridcolor='red'),  
+        # yaxis=dict(gridcolor='#3B3486'),  
         
         # Tamanho do gráfico
-        width=1200,
-        height=400,
+        # width=1200,
+        width=800,
+        height=500,
 
         # Configurar cor e tamanho da fonte dos rótulos dos eixos
 
-        xaxis=dict( # xaxis=dict(gridcolor='red'),  # ajustar para a cor desejada
-            title=dict(text='Ano', font=dict(size=16, color='#3B3486')),  # Ajustar cor e tamanho
+        xaxis=dict( # xaxis=dict(gridcolor='red'),  
+            title=dict(text='Ano', font=dict(size=16, color='#3B3486')),  
             tickfont=dict(size=14, color='#3B3486')
         ),
 
         yaxis=dict(gridcolor='#3B3486',
-            title=dict(text='Cotação do Dólar', font=dict(size=16, color='#3B3486')),  # Ajustar cor e tamanho
+            title=dict(text='Cotação do Dólar', font=dict(size=16, color='#3B3486')),  
             tickfont=dict(size=14, color='#3B3486'),
             tickprefix='US$ ',
         ),
@@ -270,12 +332,12 @@ def grafico_cotacao(df_cotacao):
 
     # Configurar o tamanho da linha
     fig.update_traces(
-        line=dict(width=4),  # ajustar para o tamanho desejado
-        marker=dict(size=8),  # ajustar para o tamanho desejado dos marcadores
+        line=dict(width=4),  
+        marker=dict(size=8), 
         # Configurar a cor e a fonte do hover_data
         hoverlabel=dict(
-            bgcolor='#3C0753',  # ajustar para a cor desejada
-            font=dict(family='Arial', size=16, color='white'),  # ajustar para a fonte desejada
+            bgcolor='#3C0753', 
+            font=dict(family='Arial', size=16, color='white'), 
         ),
     )
 
@@ -310,37 +372,37 @@ def grafico_linha_preco_mediano(df_destino_tabela):
     fig.update_layout(
         xaxis_title='Ano',
         yaxis_title='Preço por Litro',
-        yaxis_tickprefix='US$ ',  # Adicionar prefixo de dólar nos ticks do eixo Y
+        yaxis_tickprefix='US$ ',  # Adicionar prefixo de dólar
         plot_bgcolor="white",
 
         # Configurar o tamanho da fonte do título
-        title_font=dict(size=16),
+        title_font=dict(size=18),
         
         # Configurar o tamanho da linha
-        showlegend=True,  # Se quiser que a legenda mostre a correta
+        showlegend=True,  
         legend=dict(font=dict(size=16)),  # Tamanho da fonte na legenda
 
         # Configurar a cor de fundo
-        # paper_bgcolor='#DCF2F1',  # ajustar para a cor desejada
-        # paper_bgcolor='#000000',  # ajustar para a cor desejada
+        # paper_bgcolor='#DCF2F1',  
+        # paper_bgcolor='#000000',  
         
         # Configurar a cor das linhas do grid no eixo X e Y
-        # xaxis=dict(gridcolor='red'),  # ajustar para a cor desejada
-        # yaxis=dict(gridcolor='#3B3486'),  # ajustar para a cor desejada
+        # xaxis=dict(gridcolor='red'),  
+        # yaxis=dict(gridcolor='#3B3486'),  
         
         # Tamanho do gráfico
-        width=1200,
-        height=400,
+        width=800,
+        height=500,
 
         # Configurar cor e tamanho da fonte dos rótulos dos eixos
 
-        xaxis=dict( # xaxis=dict(gridcolor='red'),  # ajustar para a cor desejada
-            title=dict(text='Ano', font=dict(size=16, color='#3B3486')),  # Ajustar cor e tamanho
+        xaxis=dict( # xaxis=dict(gridcolor='red'),  
+            title=dict(text='Ano', font=dict(size=16, color='#3B3486')), 
             tickfont=dict(size=14, color='#3B3486')
         ),
 
         yaxis=dict(gridcolor='#3B3486',
-            title=dict(text='Preço por Litro', font=dict(size=16, color='#3B3486')),  # Ajustar cor e tamanho
+            title=dict(text='Preço por Litro', font=dict(size=16, color='#3B3486')), 
             tickfont=dict(size=14, color='#3B3486'),
             tickprefix='US$ ',
         ),
@@ -348,12 +410,12 @@ def grafico_linha_preco_mediano(df_destino_tabela):
 
     # Configurar o tamanho da linha
     fig.update_traces(
-        line=dict(width=4),  # ajustar para o tamanho desejado
-        marker=dict(size=8),  # ajustar para o tamanho desejado dos marcadores
+        line=dict(width=4),  
+        marker=dict(size=8),  
         # Configurar a cor e a fonte do hover_data
         hoverlabel=dict(
-            bgcolor='#3C0753',  # ajustar para a cor desejada
-            font=dict(family='Arial', size=16, color='white'),  # ajustar para a fonte desejada
+            bgcolor='#3C0753',
+            font=dict(family='Arial', size=16, color='white'),  
         ),
     )
 
@@ -380,37 +442,36 @@ def grafico_barra_preco_mediano(df_destino_tabela):
     fig.update_layout(
         xaxis_title='Continente',
         yaxis_title='Preço por Litro',
-        yaxis_tickprefix='US$ ',  # Adicionar prefixo de dólar nos ticks do eixo Y
+        yaxis_tickprefix='US$ ',  # Adicionar prefixo de dólar
         plot_bgcolor="white",
 
         # Configurar o tamanho da fonte do título
-        title_font=dict(size=16),
+        title_font=dict(size=18),
         
         # Configurar o tamanho da linha
-        showlegend=True,  # Se quiser que a legenda mostre a correta
+        showlegend=True,  
         legend=dict(font=dict(size=16)),  # Tamanho da fonte na legenda
 
         # Configurar a cor de fundo
-        # paper_bgcolor='#DCF2F1',  # ajustar para a cor desejada
-        # paper_bgcolor='#000000',  # ajustar para a cor desejada
+        # paper_bgcolor='#DCF2F1',  
+        # paper_bgcolor='#000000',  
         
         # Configurar a cor das linhas do grid no eixo X e Y
-        # xaxis=dict(gridcolor='red'),  # ajustar para a cor desejada
-        # yaxis=dict(gridcolor='#3B3486'),  # ajustar para a cor desejada
+        # xaxis=dict(gridcolor='red'), 
+        # yaxis=dict(gridcolor='#3B3486'), 
         
         # Tamanho do gráfico
-        width=1200,
-        height=400,
+        width=800,
+        height=500,
 
         # Configurar cor e tamanho da fonte dos rótulos dos eixos
-
-        xaxis=dict( # xaxis=dict(gridcolor='red'),  # ajustar para a cor desejada
-            title=dict(text='Continente', font=dict(size=16, color='#3B3486')),  # Ajustar cor e tamanho
+        xaxis=dict( # xaxis=dict(gridcolor='red'), 
+            title=dict(text='Continente', font=dict(size=16, color='#3B3486')), 
             tickfont=dict(size=14, color='#3B3486')
         ),
 
         yaxis=dict(gridcolor='#3B3486',
-            title=dict(text='Preço por Litro', font=dict(size=16, color='#3B3486')),  # Ajustar cor e tamanho
+            title=dict(text='Preço por Litro', font=dict(size=16, color='#3B3486')),  
             tickfont=dict(size=14, color='#3B3486'),
             tickprefix='US$ ',
         ),
@@ -420,15 +481,15 @@ def grafico_barra_preco_mediano(df_destino_tabela):
     fig.update_traces(
         # Configurar a cor e a fonte do hover_data
         hoverlabel=dict(
-            bgcolor='#3C0753',  # ajustar para a cor desejada
-            font=dict(family='Arial', size=16, color='white'),  # ajustar para a fonte desejada
+            bgcolor='#3C0753', 
+            font=dict(family='Arial', size=16, color='white'), 
         ),
     )
 
     st.plotly_chart(fig)
 
 
-def layout_graphs(
+def grafico_layout_mapa(
     fig: px,
     template: str = "seaborn",
     width: int = 1200,
@@ -515,7 +576,7 @@ def grafico_mapa_geral(df_destino_tabela):
     
     fig.update_layout(
     legend=dict(
-        font=dict(size=16, color="#3C0753"),  # Configurar tamanho e cor da fonte da legenda
+        font=dict(size=18, color="#3C0753"),  # Configurar tamanho e cor da fonte da legenda
     )
     )
 
@@ -528,7 +589,7 @@ def grafico_mapa_geral(df_destino_tabela):
         ),
     )
 
-    layout_graphs(
+    grafico_layout_mapa(
             fig,
             yaxis={"title":"Valor Total Exportado (US$)"},
             xaxis={"title":"Continente"},
@@ -542,8 +603,8 @@ def grafico_mapa_geral(df_destino_tabela):
                 "title": "",
                 "itemsizing": "constant",
             },
-            title_text="Valor Total Exportado (US$) por País",
-            title_sup="Mapa exibindo o valor total de vinho exportado (em US$) para cada país do mundo"
+            title_text="Valor Total Exportado (US$) por Continente",
+            title_sup="Mapa exibindo o valor total de vinho exportado (em US$) para cada Continente"
     )
 
 
@@ -562,14 +623,14 @@ def grafico_linha_comercio(dfcomercio, coluna):
         fig.update_layout(
             xaxis_title='Ano',
             yaxis_title='Vendas por Ano',
-            yaxis_tickprefix='US$ ',  # Adicionar prefixo de dólar nos ticks do eixo Y
+            yaxis_tickprefix='US$ ',  # Adicionar prefixo de dólar 
             plot_bgcolor="white",
 
             # Configurar o tamanho da fonte do título
-            title_font=dict(size=16),
+            title_font=dict(size=18),
             
             # Configurar o tamanho da linha
-            showlegend=True,  # Se quiser que a legenda mostre a correta
+            showlegend=True, 
 
             legend=dict(
             title=dict(text="Tipos de Vinhos", font=dict(size=16, color="#3B3486")),  # Configurar título da legenda
@@ -581,7 +642,7 @@ def grafico_linha_comercio(dfcomercio, coluna):
             height=400,
 
             # Configurar cor e tamanho da fonte dos rótulos dos eixos
-            xaxis=dict( # xaxis=dict(gridcolor='red'),  # ajustar para a cor desejada
+            xaxis=dict( # xaxis=dict(gridcolor='red'),  
                 title=dict(text='Ano', font=dict(size=16, color='#3B3486')),  
                 tickfont=dict(size=14, color='#3B3486')
             ),
@@ -621,14 +682,14 @@ def grafico_linha_comercio(dfcomercio, coluna):
         fig.update_layout(
             xaxis_title='Ano',
             yaxis_title='Vendas por Ano',
-            yaxis_tickprefix='US$ ',  # Adicionar prefixo de dólar nos ticks do eixo Y
+            yaxis_tickprefix='US$ ',  # Adicionar prefixo de dólar 
             plot_bgcolor="white",
 
             # Configurar o tamanho da fonte do título
             title_font=dict(size=16),
             
             # Configurar o tamanho da linha
-            showlegend=True,  # Se quiser que a legenda mostre a correta
+            showlegend=True,  
             legend=dict(font=dict(size=16)),  # Tamanho da fonte na legenda
             
             # Tamanho do gráfico
@@ -662,7 +723,6 @@ def grafico_linha_comercio(dfcomercio, coluna):
     st.plotly_chart(fig)
 
 
-
 def grafico_barra_comercio(dfcomercio):
     ## ajustes para o gráfico de barras ##
     dfcomerciov5 = dfcomercio.drop(columns=['Ano'])
@@ -686,11 +746,11 @@ def grafico_barra_comercio(dfcomercio):
     fig.update_layout(
         xaxis_title='Vinhos',
         yaxis_title='Preço Total',
-        yaxis_tickprefix='US$ ',  # Adicionar prefixo de dólar nos ticks do eixo Y
+        yaxis_tickprefix='US$ ',  # Adicionar prefixo de dólar 
         plot_bgcolor="white",
 
         # Configurar o tamanho da fonte do título
-        title_font=dict(size=16),
+        title_font=dict(size=18),
         
         # Configurar o tamanho da linha
         showlegend=True,
@@ -718,8 +778,8 @@ def grafico_barra_comercio(dfcomercio):
     fig.update_traces(
         # Configurar a cor e a fonte do hover_data
         hoverlabel=dict(
-            bgcolor='#3C0753',  # ajustar para a cor desejada
-            font=dict(family='Arial', size=16, color='white'),  # ajustar para a fonte desejada
+            bgcolor='#3C0753',  
+            font=dict(family='Arial', size=16, color='white'), 
         ),
     )
 

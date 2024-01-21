@@ -58,11 +58,11 @@ st.markdown("""# **Tech Challenge: :violet[Exportação de Vinho]**
 
 **:blue[Quem somos]:** 
 
-Somos Expert em Data Analytics em uma empresa de exportação de vinhos, responsável por apresentar relatórios iniciais em uma reunião de investidores e acionistas.
+- Somos Expert em Data Analytics em uma empresa de exportação de vinhos, responsável por apresentar relatórios iniciais em uma reunião de investidores e acionistas.
             
 **:blue[Objetivo]:**
             
-Apresentar o montante de exportação nos últimos 15 anos, destacando análises por país, e fornecer perspectivas futuras com ações recomendadas para aprimorar as exportações. Utilizando de gráficos para facilitar a compreensão, permitindo que investidores e acionistas tomem decisões informadas para impulsionar a empresa.    
+- Apresentar o montante de exportação nos últimos 15 anos, destacando análises por país, e fornecer perspectivas futuras com ações recomendadas para aprimorar as exportações. Utilizando de gráficos para facilitar a compreensão, permitindo que investidores e acionistas tomem decisões informadas para impulsionar a empresa.    
                
 """)
 
@@ -74,12 +74,10 @@ aba1, aba2, aba3 = st.tabs(['🚢 Exportação', '📁 Tabela Origem e Destino',
 with aba1:
     st.header('Exportação de vinhos', divider='violet')
 
-    # lendo as tabelas
     df_exp_vinho_tab = mod_abrir_arquivo.exportacao()[0]
     df_pais_valor = mod_abrir_arquivo.pais_geral_funcao(df_exp_vinho_tab, mod_abrir_arquivo.df_pais)
 
     st.markdown('📊 Gráfico de Países com maior **:blue[exportação]** de **:violet[vinhos]:**')
-
     st.markdown("""
         **Tendências de Faturamento**:
         - 🌍 Países com tonalidades :orange[avermelhadas] no mapa apresentam **maiores** faturamentos com a exportação de vinho enquanto os :blue[azulados] **menos**.
@@ -91,9 +89,7 @@ with aba1:
         - 🔍 Paraguai, Rússia e Estados Unidos lideram em valor de exportações de vinho.
         """)
     
-
     mod_graficos.grafico_pais_valortotal(df_pais_valor)
-
 
     # Mostrando os 10 países com maior exportação de vinhos + Brasil
     df_pais_valor_maiores = df_pais_valor[['pais', 'valor_total']].sort_values(by='valor_total', ascending=False).head(10)
@@ -138,9 +134,7 @@ with aba1:
     with col3:
 
         pais = st.selectbox('**Selecione o País:**', df_pais_valor_maioresV1['País'].unique())
-
         valor_pais = df_pais_valor_maioresV1[df_pais_valor_maioresV1['País'] == pais]['Valor Total'].astype(int)
-
         valor_pais = float(valor_pais)
 
         milao = 1000000
@@ -162,23 +156,19 @@ with aba1:
 
             📶 **Gráfico de Exportação por Valor:** Complementa a análise, mostrando o valor monetário dessas exportações ao longo do mesmo período. Isso permiti avaliar não apenas o volume exportado, mas também como o valor das exportações de vinhos variou ao longo do tempo, oferecendo uma visão mais abrangente da importância econômica do setor para o país.
                     """)
+        
+    col5, col6 = st.columns(2)
 
-    #######################################################
-
-    # st.dataframe(df_pais_valor_maioresV1)
-
-    mod_graficos.grafico_linha_pais_qtd(df_exp_vinho_tab, pais)
-
-    st.divider()
-
-    mod_graficos.grafico_linha_pais_valor(df_exp_vinho_tab, pais)
+    with col5:  
+        mod_graficos.grafico_linha_pais_qtd(df_exp_vinho_tab, pais)
+    with col6:
+        mod_graficos.grafico_linha_pais_valor(df_exp_vinho_tab, pais)
 
 
 with aba2:
 
     st.header('Tabela de Exportação de vinhos', divider='violet') 
-
-    st.markdown('**Exportação**: O dados da tabela contem todas as informações sobre a exportação de vinho e os paises de destino.')
+    st.markdown('**Exportação**: A tabela engloba todas as informações acerca da exportação de vinho, incluindo os países de destino.')
     st.write('- Exporação de vinho com origem (**:green[Brasil]**).')
 
     df_populacao_geral = mod_abrir_arquivo.populacao_geral_media()
@@ -207,35 +197,50 @@ with aba2:
 
 with aba3:
     st.header('Comércio de vinhos', divider='violet')
-    
-    st.markdown("""#### 💵 :green[**Dados econômicos**]: Exploração dos fatores econômicos que influenciam as exportações de vinho.
-                """)
+    st.markdown("""#### 💵 :green[**Dados econômicos:**]""")
     
     df_destino_tabela = mod_abrir_arquivo.destino_origem(df_populacao_geral, mod_abrir_arquivo.df_pais)
     df_cotacaov2 = mod_abrir_arquivo.cotacao_dolar(mod_abrir_arquivo.df_cotacao)
 
-    mod_graficos.grafico_cotacao(df_cotacaov2)
+    col1, col2 = st.columns(2)
 
-    st.markdown('#### 🍷 :violet[**Comercio de vinho**]: Preço mediano por litro.')
-    
-    grafico = st.radio('**Selecione a visualização do preço mediano:**', ('Ano', 'Região'))
-
-    if grafico == 'Ano':
-        mod_graficos.grafico_linha_preco_mediano(df_destino_tabela)
-    elif grafico == 'Região':
-        mod_graficos.grafico_barra_preco_mediano(df_destino_tabela)
+    with col1:
+        grafico = mod_graficos.grafico_cotacao(df_cotacaov2)
+    with col2:
+        with st.expander('📈 **Resumo do Gráfico de Cotação:**', expanded=True):
+            mod_layout_base.descricao_texto("""A cotação do dólar desempenha um papel crucial nas exportações de vinhos em escala global. A variação na taxa de câmbio afeta diretamente o custo dos vinhos exportados, influenciando sua competitividade nos mercados internacionais.                              
+            Quando a moeda do país produtor se desvaloriza em relação ao dólar, os vinhos tornam-se mais acessíveis e atraentes para os compradores estrangeiros, impulsionando as exportações. Por outro lado, uma valorização da moeda nacional pode encarecer os vinhos no exterior, afetando negativamente as vendas internacionais. Portanto, a compreensão e monitoramento da cotação do dólar são fundamentais para entender e antecipar as tendências nas exportações vinícolas em nível mundial.""")
 
     st.divider()
 
-    st.markdown('#### **Avaliações de vinhos**:')
+    st.markdown('#### 🍷 :violet[**Comercio de vinho:**]')
+    
+    col3, col4 = st.columns(2)
 
+    with col3:
+        grafico = st.radio('**Selecione a visualização do preço mediano:**', ('Ano', 'Região'))
 
-    st.markdown("""🗺️ :blue[**Exportação de vinho globalmente**]: Os países que tem o maior mercado de vinhos e de varejo do mundo.
+        if grafico == 'Ano':
+            mod_graficos.grafico_linha_preco_mediano(df_destino_tabela)
+        elif grafico == 'Região':
+            mod_graficos.grafico_barra_preco_mediano(df_destino_tabela)
+    with col4:
+        with st.expander('📈 **Resumo do Gráfico de Preço Médio:**', expanded=True):
+            mod_layout_base.descricao_texto("""O preço médio de um vinho é uma medida de acompanhamento e indicação do valor unitário do vinho. Ao examinar o comércio de vinhos, é essencial observar a flutuação do preço mediano por litro ao longo dos anos, bem como a variação regional nesse aspecto. A análise proporciona insights sobre as tendências de preços ao longo do tempo e destaca diferenças significativas nas regiões vinícolas. Observar a variação regional no preço por litro é crucial para entender como fatores como clima, solo e técnicas de produção podem influenciar os custos e, consequentemente, os preços dos vinhos em diferentes partes do mundo. Essa abordagem aprofundada contribui para uma compreensão mais completa e informada do cenário comercial vinícola.""")
+
+    st.divider()
+
+    st.markdown("""#### 🗺️ :blue[**Exportação de vinho globalmente:**] """)
+    st.markdown("""Os países que tem o maior mercado de vinhos e de varejo do mundo.
                 Demonstrando os países que exportaram o maior valor (US$) de vinhos.""")
     
     mod_graficos.grafico_mapa_geral(df_destino_tabela)
 
-    st.markdown("""🍇 :violet[**Tipos de vinhos mais comercializados**]: Consideração das avaliações para entender preferências e tendências de mercado.""")
+    st.divider()
+
+    st.markdown("""#### 🍇 :violet[**Tipos de vinhos mais comercializados:**]""")
+
+    st.markdown("""📉 Ao analisar os tipos de vinhos mais comercializados, notamos uma tendência de crescimento no faturamento do **vinho de mesa** ao longo dos anos. Em **2005**, atingiu seu pico com **:blue[271 milhões]**, enquanto em **2021**, embora tenha reduzido para **:blue[210 milhões]**, ainda mantém uma posição significativa. (**:blue[Vendas em US dólar]**)""")
 
     dfcomercio = mod_abrir_arquivo.comercializacao()
     dfcoluna = dfcomercio
@@ -244,7 +249,8 @@ with aba3:
 
     mod_graficos.grafico_linha_comercio(dfcomercio, coluna)
 
-    st.divider()
+    st.markdown("""📊 As vendas totais durante esse período foram lideradas pelo **vinho de mesa**, com **:blue[9.3 bilhões]**, seguido pelo Vinho Fino de Mesa com **:blue[1.4 bilhões]**. Além disso, os **vinhos especiais**, **frizantes** e **orgânicos** contribuíram com valores de **:blue[163 milhões]**, **:blue[31 milhões]** e **:blue[20 mil]**, respectivamente. Avaliações detalhadas desses tipos de vinhos oferecem insights valiosos sobre as preferências e tendências do mercado, fornecendo uma visão abrangente do panorama da indústria vinícola.
+    (**:blue[Vendas em US dólar]**)""")
 
     mod_graficos.grafico_barra_comercio(dfcomercio)
     
