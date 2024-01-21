@@ -14,6 +14,8 @@ warnings.filterwarnings('ignore')
 
 ### ---- GRUPO 16 ---- ###
 
+# Participantes
+
 # LEANDRO BRAGA ALVES
 # leandro.bsbdf10@gmail.com
 
