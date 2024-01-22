@@ -7,12 +7,12 @@ from matplotlib.ticker import FuncFormatter
 
 def formatar_como_moeda(valor, divisor_casas):
     # Ajuste da formatação de moeda
-    return f'US$ {valor/divisor_casas:,.2f}{"B" if valor >= 1000000000 else "MM"}'.replace(',', 'X').replace('.', ',').replace('X', '.')
+    return f'US$ {valor/divisor_casas:,.2f}{"MM" if valor >= 1000000 else "M"}'.replace(',', 'X').replace('.', ',').replace('X', '.')
 
 
 def formatar_como_quantidade(valor, divisor_casas):
     # Ajuste da formatação de moeda
-    return f'{valor/divisor_casas:,.2f}{"B" if valor >= 1000000000 else "MM"}'.replace(',', 'X').replace('.', ',').replace('X', '.')
+    return f'{valor/divisor_casas:,.2f}{"MM" if valor >= 1000000 else "M"}'.replace(',', 'X').replace('.', ',').replace('X', '.')
 
 
 def billion_formatter(x, pos):
@@ -548,11 +548,14 @@ def grafico_layout_mapa(
     return st.plotly_chart(fig)
 
 
-def grafico_mapa_geral(df_destino_tabela):
+def grafico_mapa_geral(df_destino_tabela,var_valor_litros):
 
-    df_aux5v2 = df_destino_tabela[df_destino_tabela["Ano"] > 0].groupby(['Continente','ISO_code', 'Destino'])[['Valor']].sum().reset_index().sort_values(by='Continente', ascending=False)
-    
-    var = "Valor"
+    if var_valor_litros:
+        var = "Valor"
+    else:
+        var = "Litros"
+
+    df_aux5v2 = df_destino_tabela[df_destino_tabela["Ano"] > 0].groupby(['Continente','ISO_code', 'Destino'])[[var]].sum().reset_index().sort_values(by='Continente', ascending=False)
 
     fig = px.scatter_geo(
             df_aux5v2,
@@ -591,7 +594,7 @@ def grafico_mapa_geral(df_destino_tabela):
 
     grafico_layout_mapa(
             fig,
-            yaxis={"title":"Valor Total Exportado (US$)"},
+            yaxis={"title":f"Total Exportado em {var} - (US$)"},
             xaxis={"title":"Continente"},
             hovertemplate="<b>%{customdata[0]}</b><br>Total: U$ %{customdata[1]}",
             legend={
@@ -603,8 +606,8 @@ def grafico_mapa_geral(df_destino_tabela):
                 "title": "",
                 "itemsizing": "constant",
             },
-            title_text="Valor Total Exportado (US$) por Continente",
-            title_sup="Mapa exibindo o valor total de vinho exportado (em US$) para cada Continente"
+            title_text=f"Total Exportado em {var} - (US$) por Continente",
+            title_sup=f"Mapa exibindo o {var} total de vinho exportado (em US$) para cada Continente"
     )
 
 
@@ -784,7 +787,6 @@ def grafico_barra_comercio(dfcomercio):
     )
 
     st.plotly_chart(fig)
-
 
 
 

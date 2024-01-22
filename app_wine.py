@@ -194,6 +194,7 @@ with aba2:
                                         'Litros por População',
                                         'Preço do Vinho (US$/Litro)']
     
+    st.markdown('**:violet[**Filtros da tabela:**]**')
     mod_layout_base.selecao_dataframe(df_destino_tabela_config)
 
 
@@ -236,7 +237,9 @@ with aba3:
     st.markdown("""Os países que tem o maior mercado de vinhos e de varejo do mundo.
                 Demonstrando os países que exportaram o maior valor (US$) de vinhos.""")
     
-    mod_graficos.grafico_mapa_geral(df_destino_tabela)
+    var_valor_litros = st.toggle('**Litros / Valor**', ['Valor, Litros'], help='Se marcado o mapa irá exibir os **valores** totais de exportação, desmarcado exibe os **litros**.')
+    
+    mod_graficos.grafico_mapa_geral(df_destino_tabela, var_valor_litros)
 
     st.divider()
 
