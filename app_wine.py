@@ -20,6 +20,8 @@ warnings.filterwarnings('ignore')
 # Rodrigo
 # Roberto
 
+#########################
+
 ## --- Formatação de valores --- ##
 pd.options.display.float_format = "{:.2f}".format 
 
