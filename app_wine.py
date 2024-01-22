@@ -21,7 +21,7 @@ warnings.filterwarnings('ignore')
 # Roberto
 
 ## --- Formatação de valores --- ##
-pd.options.display.float_format = "{:.2f}".format
+pd.options.display.float_format = "{:.2f}".format 
 
 # -- imagens e logos -- #
 img_wine = './data/img/vinho.png'
