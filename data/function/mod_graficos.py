@@ -162,7 +162,7 @@ def grafico_linha_pais_qtd(df_exp_vinho_tab, coluna):
         # yaxis=dict(gridcolor='#3B3486'),
         
         # Tamanho do gráfico
-        width=900,
+        width=800,
         height=400,
 
         # Configurar cor e tamanho da fonte dos rótulos dos eixos
@@ -241,7 +241,7 @@ def grafico_linha_pais_valor(df_exp_vinho_tab, coluna):
         # yaxis=dict(gridcolor='#3B3486'),  
         
         # Tamanho do gráfico
-        width=900,
+        width=800,
         height=400,
 
         # Configurar cor e tamanho da fonte dos rótulos dos eixos
@@ -313,7 +313,7 @@ def grafico_cotacao(df_cotacao):
         
         # Tamanho do gráfico
         # width=1200,
-        width=800,
+        width=1500,
         height=500,
 
         # Configurar cor e tamanho da fonte dos rótulos dos eixos
@@ -391,7 +391,7 @@ def grafico_linha_preco_mediano(df_destino_tabela):
         # yaxis=dict(gridcolor='#3B3486'),  
         
         # Tamanho do gráfico
-        width=800,
+        width=1500,
         height=500,
 
         # Configurar cor e tamanho da fonte dos rótulos dos eixos
@@ -461,7 +461,7 @@ def grafico_barra_preco_mediano(df_destino_tabela):
         # yaxis=dict(gridcolor='#3B3486'), 
         
         # Tamanho do gráfico
-        width=800,
+        width=1500,
         height=500,
 
         # Configurar cor e tamanho da fonte dos rótulos dos eixos
@@ -492,7 +492,7 @@ def grafico_barra_preco_mediano(df_destino_tabela):
 def grafico_layout_mapa(
     fig: px,
     template: str = "seaborn",
-    width: int = 1200,
+    width: int = 1500,
     height: int = 500,
     margin: dict = {"l": 10, "r": 10, "b": 10, "t": 85, "pad": 5},
     legend: dict = {
@@ -641,8 +641,8 @@ def grafico_linha_comercio(dfcomercio, coluna):
             ),
             
             # Tamanho do gráfico
-            width=1200,
-            height=400,
+            width=1500,
+            height=500,
 
             # Configurar cor e tamanho da fonte dos rótulos dos eixos
             xaxis=dict( # xaxis=dict(gridcolor='red'),  
@@ -696,8 +696,8 @@ def grafico_linha_comercio(dfcomercio, coluna):
             legend=dict(font=dict(size=16)),  # Tamanho da fonte na legenda
             
             # Tamanho do gráfico
-            width=1200,
-            height=400,
+            width=1500,
+            height=500,
 
             # Configurar cor e tamanho da fonte dos rótulos dos eixos
             xaxis=dict( # xaxis=dict(gridcolor='red'),  # ajustar para a cor desejada
@@ -760,8 +760,8 @@ def grafico_barra_comercio(dfcomercio):
         legend=dict(font=dict(size=16)),  
 
         # Tamanho do gráfico
-        width=1200,
-        height=400,
+        width=1500,
+        height=500,
 
         # Configurar cor e tamanho da fonte dos rótulos dos eixos
 

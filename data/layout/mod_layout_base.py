@@ -72,7 +72,7 @@ def tamanho_font_card():
     css = """
     <style>
         .st-emotion-cache-1xarl3l {
-            font-size: 2.70rem;
+            font-size: 2.20rem;
             padding-bottom: 0.25rem;
         }
     <style>
