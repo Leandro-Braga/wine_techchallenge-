@@ -162,8 +162,8 @@ def grafico_linha_pais_qtd(df_exp_vinho_tab, coluna):
         # yaxis=dict(gridcolor='#3B3486'),
         
         # Tamanho do gráfico
-        width=700,
-        height=400,
+        width=1100,
+        height=500,
 
         # Configurar cor e tamanho da fonte dos rótulos dos eixos
 
@@ -241,8 +241,8 @@ def grafico_linha_pais_valor(df_exp_vinho_tab, coluna):
         # yaxis=dict(gridcolor='#3B3486'),  
         
         # Tamanho do gráfico
-        width=700,
-        height=400,
+        width=1100,
+        height=500,
 
         # Configurar cor e tamanho da fonte dos rótulos dos eixos
 

@@ -149,12 +149,16 @@ with aba1:
             📶 **Gráfico de Exportação por Valor:** Complementa a análise, mostrando o valor monetário dessas exportações ao longo do mesmo período. Isso permiti avaliar não apenas o volume exportado, mas também como o valor das exportações de vinhos variou ao longo do tempo, oferecendo uma visão mais abrangente da importância econômica do setor para o país.
                     """)
         
-    col5, col6 = st.columns(2)
 
-    with col5:  
-        mod_graficos.grafico_linha_pais_qtd(df_exp_vinho_tab, pais)
-    with col6:
-        mod_graficos.grafico_linha_pais_valor(df_exp_vinho_tab, pais)
+    mod_graficos.grafico_linha_pais_qtd(df_exp_vinho_tab, pais)
+    mod_graficos.grafico_linha_pais_valor(df_exp_vinho_tab, pais)
+    
+    # col5, col6 = st.columns(2)
+    
+    # with col5:  
+    #     mod_graficos.grafico_linha_pais_qtd(df_exp_vinho_tab, pais)
+    # with col6:
+    #     mod_graficos.grafico_linha_pais_valor(df_exp_vinho_tab, pais)
 
 
 with aba2:
