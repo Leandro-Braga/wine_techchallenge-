@@ -20,6 +20,10 @@ warnings.filterwarnings('ignore')
 # Rodrigo
 # Roberto
 
+# Análise - Problema – Conclusão.
+# Qual é o mercado que podemos explorar nos próximos anos?
+
+
 #########################
 
 ## --- Formatação de valores --- ##
@@ -49,14 +53,19 @@ mod_layout_base.texto_diversos()
 
 st.markdown("""# **Tech Challenge: :violet[Exportação de Vinho]**
 
-**:violet[Quem somos]:** 
+**:violet[Quem Somos:]** 
 
 - Somos Expert em Data Analytics em uma empresa de exportação de vinhos, responsável por apresentar relatórios iniciais em uma reunião de investidores e acionistas.
             
-**:violet[Objetivo]:**
+**:violet[Objetivo:]**
             
 - Apresentar o montante de exportação nos últimos 15 anos, destacando análises por países, e fornecer perspectivas futuras com ações recomendadas para aprimorar as exportações. Utilizando de gráficos para facilitar a compreensão, permitindo que investidores e acionistas tomem decisões informadas para impulsionar a empresa.          
 """)
+
+st.markdown('**:violet[Data Base de Exportação:]**')
+ultimos15anos_geral = st.toggle('**1970-2022 / últimos 15 anos**', ['1970-2022, últimos 15 anos'], help='Se marcado os gráficos irão exibir os **últimos 15 anos** de exportação, desmarcado exibem os anos entre **1970-2022**.')
+
+# st.header(ultimos15anos_geral)
 
 st.markdown('**Fonte** - [Dados da Vitivinicultura](https://www.cnpuv.embrapa.br/vitibrazil/index.php?opcao=opt_02)')
 
@@ -66,22 +75,23 @@ aba1, aba2, aba3 = st.tabs(['🚢 Exportação', '📁 Tabela Origem e Destino',
 with aba1:
     st.header('Exportação de vinhos', divider='violet')
 
-    df_exp_vinho_tab = mod_abrir_arquivo.exportacao()[0]
-    df_pais_valor = mod_abrir_arquivo.pais_geral_funcao(df_exp_vinho_tab, mod_abrir_arquivo.df_pais)
+    df_exp_vinho_tab = mod_abrir_arquivo.exportacao()
+    # df_exp_vinho_tab = mod_abrir_arquivo.exportacao()[0]
+    df_pais_valor = mod_abrir_arquivo.pais_geral_funcao(df_exp_vinho_tab, mod_abrir_arquivo.df_pais, ultimos15anos_geral)
 
     st.markdown('📊 Gráfico de Países com maior **:blue[exportação]** de **:violet[vinhos]:**')
     st.markdown("""
         **Tendências de Faturamento**:
-        - 🌍 Países com tonalidades :orange[avermelhadas] no mapa apresentam **maiores** faturamentos com a exportação de vinho enquanto os :blue[azulados] **menos**.
+        - 🌍 Países com as tonalidades :orange[avermelhadas] no mapa apresentam **maiores** faturamentos com a exportação de vinho enquanto os :blue[azulados] **menos**.
 
         **Crescimento da Exportação**:
-        - 🍷 O valor da exportação de :violet[vinhos] tem aumentado mundialmente, indicando um crescimento geral no mercado durante o período de 2012 a 2022.
+        - 🍷 O valor da exportação de :violet[vinhos] tem aumentado mundialmente, indicando um crescimento geral no mercado durante o período de análise.
 
         **Principais Exportadores**:
         - 🔍 Paraguai, Rússia e Estados Unidos lideram em valor de exportações de vinho.
         """)
-    
-    mod_graficos.grafico_pais_valortotal(df_pais_valor)
+        
+    mod_graficos.grafico_pais_valortotal(df_pais_valor, ultimos15anos_geral)
 
     # Mostrando os 10 países com maior exportação de vinhos + Brasil
     df_pais_valor_maiores = df_pais_valor[['pais', 'valor_total']].sort_values(by='valor_total', ascending=False).head(10)
@@ -92,13 +102,18 @@ with aba1:
 
     col1, col2 = st.columns(2)
 
+    if ultimos15anos_geral:
+        valor_paraquai = 'US$ 38.719.031,00'
+    else:
+        valor_paraquai = 'US$ 85.606.168,00'
+
     with col1:
-        st.markdown("""
+        st.markdown(f"""
         🔝 **Principais Exportadores**:
         - Paraguai, Rússia e Estados Unidos lideram em valor de exportações de vinho.
 
         💵 **Economia do Paraguai**:
-        - Conforme tabela de países com o Paraguai à frente, exportando um total de US$ 85.606.168,00, seguido pelos Estados Unidos e Rússia.
+        - Conforme tabela de países com o Paraguai à frente, exportando um total de {valor_paraquai}, seguido pelos Estados Unidos e Rússia.
         - A análise dos valores de exportação mostra que o Paraguai teve um maior valor de exportação, superando os Estados Unidos. Esse fenômeno pode ser explicado por vários fatores relacionados ao desempenho econômico e às relações comerciais entre os países.
         - Crescimento Econômico do Paraguai: A economia do Paraguai também registrou um crescimento significativo entre 2022 e 2023. O setor agrícola, particularmente a produção de soja, arroz, cana-de-açúcar e mandioca, foi um fator-chave nesse crescimento. O Paraguai experimentou um aumento na demanda externa por seus produtos.
 
@@ -112,8 +127,12 @@ with aba1:
     
     st.divider()
     
-    st.markdown('- 📈 **O crescimento da exportação geral no mundo por período entre 1970 e 2022.**')
-    mod_graficos.grafico_ano_barra(df_exp_vinho_tab)
+    if ultimos15anos_geral:
+        st.markdown('- 📈 **O crescimento da exportação geral no mundo por período entre 2008 e 2022.**')
+    else:
+        st.markdown('- 📈 **O crescimento da exportação geral no mundo por período entre 1970 e 2022.**')
+    
+    mod_graficos.grafico_ano_barra(df_exp_vinho_tab, ultimos15anos_geral)
 
     st.divider()
 
@@ -138,11 +157,19 @@ with aba1:
             Os gráficos que criamos mostram a variação das exportações de vinhos dos principais paises entre os anos de 1970 e 2022. Este gráfico oferece uma visão detalhada e histórica da evolução da exportação de vinhos do país selecionado, permitindo identificar padrões, picos e quedas ao longo do tempo.
                     """)
     with col4:
-        st.markdown("""
+
+        if ultimos15anos_geral:
+            data_resumo = '2008 - 2022'
+            data_resumo2 = 'A partir do ano de 2012 no geral'
+        else:
+            data_resumo = '1970 - 2022'
+            data_resumo2 = 'A partir da década de 1980'
+
+        st.markdown(f"""
             📋 **Resumo do Gráfico de Quantidade:**
-            - **Período:** 1970 - 2022
+            - **Período:** {data_resumo}
             - **Dados Representados:** Exportações de vinhos global.
-            - **Crescimento Significativo:** A partir da década de 1980, observa-se um aumento significativo nas exportações, atingindo picos notáveis em determinados anos.
+            - **Crescimento Significativo:** {data_resumo2}, observa-se um aumento significativo nas exportações, atingindo picos notáveis em determinados anos.
             - **Variações Acentuadas:** Há variações acentuadas na quantidade de exportações ao longo do período analisado, indicando flutuações no mercado de vinhos ou na capacidade de exportação do país.
             - **Picos de Exportação:** Notam-se picos expressivos de exportação em alguns anos específicos, sugerindo eventos ou mudanças no mercado que impactaram positivamente as exportações.
 
@@ -150,15 +177,8 @@ with aba1:
                     """)
         
 
-    mod_graficos.grafico_linha_pais_qtd(df_exp_vinho_tab, pais)
-    mod_graficos.grafico_linha_pais_valor(df_exp_vinho_tab, pais)
-    
-    # col5, col6 = st.columns(2)
-    
-    # with col5:  
-    #     mod_graficos.grafico_linha_pais_qtd(df_exp_vinho_tab, pais)
-    # with col6:
-    #     mod_graficos.grafico_linha_pais_valor(df_exp_vinho_tab, pais)
+    mod_graficos.grafico_linha_pais_qtd(df_exp_vinho_tab, pais, ultimos15anos_geral)
+    mod_graficos.grafico_linha_pais_valor(df_exp_vinho_tab, pais, ultimos15anos_geral)
 
 
 with aba2:
@@ -189,7 +209,7 @@ with aba2:
                                         'Preço do Vinho (US$/Litro)']
     
     st.markdown('**:violet[**Filtros da tabela:**]**')
-    mod_layout_base.selecao_dataframe(df_destino_tabela_config)
+    mod_layout_base.selecao_dataframe(df_destino_tabela_config, ultimos15anos_geral)
 
 
 with aba3:
@@ -199,12 +219,10 @@ with aba3:
     df_destino_tabela = mod_abrir_arquivo.destino_origem(df_populacao_geral, mod_abrir_arquivo.df_pais)
     df_cotacaov2 = mod_abrir_arquivo.cotacao_dolar(mod_abrir_arquivo.df_cotacao)
 
-    col1, col2 = st.columns(2)
-
     st.markdown("""📈 A cotação do dólar desempenha um papel crucial nas exportações de vinhos em escala global. A variação na taxa de câmbio afeta diretamente o **custo dos vinhos exportados**, influenciando sua competitividade nos mercados internacionais.                             
     Quando a moeda do país produtor se **desvaloriza em relação ao dólar**, os vinhos tornam-se **mais acessíveis e atraentes para os compradores estrangeiros**, impulsionando as exportações.""")
 
-    grafico = mod_graficos.grafico_cotacao(df_cotacaov2)
+    grafico = mod_graficos.grafico_cotacao(df_cotacaov2, ultimos15anos_geral)
 
     st.divider()
 
@@ -215,9 +233,9 @@ with aba3:
     grafico = st.radio('**Selecione a visualização do preço mediano:**', ('Ano', 'Região'))
 
     if grafico == 'Ano':
-        mod_graficos.grafico_linha_preco_mediano(df_destino_tabela)
+        mod_graficos.grafico_linha_preco_mediano(df_destino_tabela, ultimos15anos_geral)
     elif grafico == 'Região':
-        mod_graficos.grafico_barra_preco_mediano(df_destino_tabela)
+        mod_graficos.grafico_barra_preco_mediano(df_destino_tabela, ultimos15anos_geral)
     
     st.divider()
 
@@ -227,25 +245,41 @@ with aba3:
     
     var_valor_litros = st.toggle('**Litros / Valor**', ['Valor, Litros'], help='Se marcado o mapa irá exibir os **valores** totais de exportação, desmarcado exibe os **litros**.')
     
-    mod_graficos.grafico_mapa_geral(df_destino_tabela, var_valor_litros)
+    mod_graficos.grafico_mapa_geral(df_destino_tabela, var_valor_litros, ultimos15anos_geral)
 
     st.divider()
 
+    if ultimos15anos_geral:
+        vinho_mesa = '234 milhões'
+        vinho_mesa_barra = '3.0 bilhões'
+        Fino_Mesa_barra = '327 milhões'
+        frizante = '25 milhões'
+        especiais = '124 mil'
+        organico = '18 mil'
+    else:
+        vinho_mesa = '271 milhões'
+        vinho_mesa_barra = '9.3 bilhões'
+        Fino_Mesa_barra = '1.4 bilhões'
+        frizante = '31 milhões'
+        especiais = '163 milhões'
+        organico = '20 mil'
+
     st.markdown("""#### 🍇 :violet[**Tipos de vinhos mais comercializados:**]""")
 
-    st.markdown("""📉 Ao analisar os tipos de vinhos mais comercializados, notamos uma tendência de crescimento no faturamento do **vinho de mesa** ao longo dos anos. Em **2005**, atingiu seu pico com **:blue[271 milhões]**, enquanto em **2021**, embora tenha reduzido para **:blue[210 milhões]**, ainda mantém uma posição significativa. (**:blue[Vendas em US dólar]**)""")
+    st.markdown(f"""📉 Ao analisar os tipos de vinhos mais comercializados, notamos uma tendência de crescimento no faturamento do **vinho de mesa** ao longo dos anos. Em **2005**, atingiu seu pico com **:blue[{vinho_mesa}]**, enquanto em **2021**, embora tenha reduzido para **:blue[210 milhões]**, ainda mantém uma posição significativa. (**:blue[Vendas em US dólar]**)""")
 
     dfcomercio = mod_abrir_arquivo.comercializacao()
+    
     dfcoluna = dfcomercio
 
     coluna = grafico = st.radio('**Selecione o Tipo de Vinho:**', (dfcoluna.columns))
 
-    mod_graficos.grafico_linha_comercio(dfcomercio, coluna)
+    mod_graficos.grafico_linha_comercio(dfcomercio, coluna, ultimos15anos_geral)
 
-    st.markdown("""📊 As vendas totais durante esse período foram lideradas pelo **vinho de mesa**, com **:blue[9.3 bilhões]**, seguido pelo Vinho Fino de Mesa com **:blue[1.4 bilhões]**. Além disso, os **vinhos especiais**, **frizantes** e **orgânicos** contribuíram com valores de **:blue[163 milhões]**, **:blue[31 milhões]** e **:blue[20 mil]**, respectivamente. Avaliações detalhadas desses tipos de vinhos oferecem insights valiosos sobre as preferências e tendências do mercado, fornecendo uma visão abrangente do panorama da indústria vinícola.
+    st.markdown(f"""📊 As vendas totais durante esse período foram lideradas pelo **vinho de mesa**, com **:blue[{vinho_mesa_barra}]**, seguido pelo **vinho fino de mesa** com **:blue[{Fino_Mesa_barra}]**. Além disso, os **frizantes**, **vinhos especiais** e **orgânicos** contribuíram com valores de **:blue[{frizante}]**, **:blue[{especiais}]** e **:blue[{organico}]**, respectivamente. Avaliações detalhadas desses tipos de vinhos oferecem insights sobre as preferências e tendências do mercado.
     (**:blue[Vendas em US dólar]**)""")
 
-    mod_graficos.grafico_barra_comercio(dfcomercio)
+    mod_graficos.grafico_barra_comercio(dfcomercio, ultimos15anos_geral)
     
 
 

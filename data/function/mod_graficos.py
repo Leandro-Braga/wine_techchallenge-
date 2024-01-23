@@ -22,7 +22,12 @@ def billion_formatter(x, pos):
     return f'US${x/milao:,.2f}{"B" if x >= 1000000000 else "MM"}'.replace(',', 'X').replace('.', ',').replace('X', '.')
 
 
-def grafico_pais_valortotal(df):
+def grafico_pais_valortotal(df, ultimos15anos_geral):
+    
+    if ultimos15anos_geral:
+        data_titulo = '(2008-2022)'
+    else:    
+        data_titulo = '(1970-2022)'
 
     # Criando o gráfico de mapa com uma escala de cores contínua
     fig = px.choropleth(
@@ -34,7 +39,7 @@ def grafico_pais_valortotal(df):
         hover_data={'valor_total': ':$.2f'},
         labels={'valor_total': 'Preço'},
         color_continuous_scale=['#4682A9', '#F9B572', '#F45050'], 
-        title='Preço Exportação (US$) por Região',
+        title=f'Preço Exportação (US$) por Região {data_titulo} ',
         color_discrete_sequence=['#910A67'],
     )
 
@@ -63,13 +68,17 @@ def grafico_pais_valortotal(df):
     st.plotly_chart(fig)
 
 
-def grafico_ano_barra(df):
+def grafico_ano_barra(df, ultimos15anos_geral):
 
     # Constantes para bilhão e milhão
     bilhao = 1000000000
     milao = 1000000
 
     try:
+        if ultimos15anos_geral:
+            df = df[df['classe'] == 'valor'].tail(15)
+        else:
+            df = df[df['classe'] == 'valor']
         # Filtrando por 'classe' e garantindo que 'total_geral' é numérico
         df = df[df['classe'] == 'valor'][['total_geral']].astype(int)
 
@@ -116,9 +125,14 @@ def grafico_ano_barra(df):
         st.warning('Atualizar a página!')
 
 
-def grafico_linha_pais_qtd(df_exp_vinho_tab, coluna):
+def grafico_linha_pais_qtd(df_exp_vinho_tab, coluna, ultimos15anos_geral):
 
-    df_qtd = df_exp_vinho_tab.loc[df_exp_vinho_tab['classe'] == 'quantidade'][[coluna]]
+    if ultimos15anos_geral:
+        df_qtd = df_exp_vinho_tab.loc[df_exp_vinho_tab['classe'] == 'quantidade'][[coluna]].tail(15)
+        data_titulo = '(2008-2022)'
+    else:
+        df_qtd = df_exp_vinho_tab.loc[df_exp_vinho_tab['classe'] == 'quantidade'][[coluna]]
+        data_titulo = '(1970-2022)'
 
     df_qtd = df_qtd.reset_index()
     df_qtd = df_qtd.rename(columns={'index':'Ano'})
@@ -131,7 +145,7 @@ def grafico_linha_pais_qtd(df_exp_vinho_tab, coluna):
         hover_data=coluna,
         markers=True,
         labels={coluna: coluna},
-        title=f'Exportações por Quantidade de Vinhos do {coluna} (1970-2022)',
+        title=f'Exportações por Quantidade de Vinhos do {coluna} {data_titulo}',
         line_shape='spline',  # curvatura da linha (linear, spline, hv, vh, hvh, vhl)
         line_dash_sequence=['solid'],  # estilo da linha
         color_discrete_sequence=['#910A67'], # cor da linha
@@ -193,10 +207,16 @@ def grafico_linha_pais_qtd(df_exp_vinho_tab, coluna):
     st.plotly_chart(fig)
 
 
-def grafico_linha_pais_valor(df_exp_vinho_tab, coluna):
+def grafico_linha_pais_valor(df_exp_vinho_tab, coluna, ultimos15anos_geral):
+
+    if ultimos15anos_geral:
+        df_valor = df_exp_vinho_tab.loc[df_exp_vinho_tab['classe'] == 'valor'][[coluna]].tail(15)
+        data_titulo = '(2008-2022)'
+    else:
+        df_valor = df_exp_vinho_tab.loc[df_exp_vinho_tab['classe'] == 'valor'][[coluna]]
+        data_titulo = '(1970-2022)'
 
     # df_qtd = df_exp_vinho_tab.loc[df_exp_vinho_tab['classe'] == 'quantidade'][[coluna]]
-    df_valor = df_exp_vinho_tab.loc[df_exp_vinho_tab['classe'] == 'valor'][[coluna]]
 
     df_valor = df_valor.reset_index()
     df_valor = df_valor.rename(columns={'index':'Ano'})
@@ -211,7 +231,7 @@ def grafico_linha_pais_valor(df_exp_vinho_tab, coluna):
         hover_data=coluna,
         markers=True,
         labels={coluna: coluna},
-        title=f'Exportações por Valor de Vinhos do {coluna} (1970-2022)',
+        title=f'Exportações por Valor de Vinhos do {coluna} {data_titulo}',
         line_shape='spline',  # curvatura da linha (linear, spline, hv, vh, hvh, vhl)
         line_dash_sequence=['solid'],  # estilo da linha
         color_discrete_sequence=['#910A67'], # cor da linha
@@ -273,7 +293,15 @@ def grafico_linha_pais_valor(df_exp_vinho_tab, coluna):
     st.plotly_chart(fig)
 
 
-def grafico_cotacao(df_cotacao):
+def grafico_cotacao(df_cotacao, ultimos15anos_geral):
+
+    if ultimos15anos_geral:
+        df_cotacao = df_cotacao.sort_values(by='Data').tail(15)
+        titulo_data = '2009 - 2023'
+    else:
+        df_cotacao = df_cotacao.sort_values(by='Data')
+        titulo_data = '1994 - 2023'
+
 
     fig = px.line(
         df_cotacao,
@@ -282,7 +310,7 @@ def grafico_cotacao(df_cotacao):
         hover_data={'Cotação Dólar': ':$.2f'},
         markers=True,
         labels={'Cotação Dólar': 'Cotação do Dólar'},
-        title='Variação da Cotação do Dólar ao Longo dos Anos',
+        title=f'Variação da Cotação do Dólar ao Longo dos Anos entre {titulo_data}',
         line_shape='spline',  # a curvatura da linha (linear, spline, hv, vh, hvh, vhl)
         line_dash_sequence=['solid'],  # o estilo da linha
         color_discrete_sequence=['#910A67'], # a cor da linha
@@ -347,9 +375,19 @@ def grafico_cotacao(df_cotacao):
     st.plotly_chart(fig)
 
 
-def grafico_linha_preco_mediano(df_destino_tabela):
+def grafico_linha_preco_mediano(df_destino_tabela, ultimos15anos_geral):
 
-    df_aux19 = df_destino_tabela[df_destino_tabela['Preco_por_litro'] > 0].groupby(['Ano'])[['Preco_por_litro']].mean().reset_index().sort_values(by='Ano', ascending=False)
+    if ultimos15anos_geral:
+        ultimos15 = df_destino_tabela[(df_destino_tabela['Preco_por_litro'] > 0) & (df_destino_tabela['Ano'] >= 2008)].sort_values(by='Ano')
+        titulo_texto = '2008 - 2022'
+    else:
+        ultimos15 = df_destino_tabela[df_destino_tabela['Preco_por_litro'] > 0]
+        titulo_texto = '1970 - 2022'
+
+    # st.dataframe(ultimos15)
+
+    df_aux19 = ultimos15.groupby(['Ano'])[['Preco_por_litro']].mean().reset_index().sort_values(by='Ano', ascending=False)
+    # df_aux19 = df_destino_tabela[df_destino_tabela['Preco_por_litro'] > 0].groupby(['Ano'])[['Preco_por_litro']].mean().reset_index().sort_values(by='Ano', ascending=False)
 
     df_aux19 = df_aux19.rename(columns={'Preco_por_litro': 'Preço por Litro'})
 
@@ -361,7 +399,7 @@ def grafico_linha_preco_mediano(df_destino_tabela):
                   hover_data={'Preço por Litro': ':$.2f'},
                   markers=True,
                   labels={'Preço por Litro': 'Preço por Litro'},
-                  title='Preço por Litro Mediano por Ano',
+                  title=f'Preço por Litro Mediano por Ano entre {titulo_texto}',
                   line_shape='spline',
                   line_dash_sequence=['solid'],
                   color_discrete_sequence=['#910A67']
@@ -422,8 +460,17 @@ def grafico_linha_preco_mediano(df_destino_tabela):
     st.plotly_chart(fig)
 
 
-def grafico_barra_preco_mediano(df_destino_tabela):
-    df_aux20 = df_destino_tabela[df_destino_tabela['Preco_por_litro'] > 0].groupby(['Continente'])[['Preco_por_litro']].mean().reset_index().sort_values(by='Preco_por_litro', ascending=False)
+def grafico_barra_preco_mediano(df_destino_tabela, ultimos15anos_geral):
+
+    if ultimos15anos_geral:
+        ultimos15 = df_destino_tabela[(df_destino_tabela['Preco_por_litro'] > 0) & (df_destino_tabela['Ano'] >= 2008)].sort_values(by='Ano')
+        titulo_texto = '2008 - 2022'
+    else:
+        ultimos15 = df_destino_tabela[df_destino_tabela['Preco_por_litro'] > 0]
+        titulo_texto = '1970 - 2022'
+
+    df_aux20 = ultimos15.groupby(['Continente'])[['Preco_por_litro']].mean().reset_index().sort_values(by='Preco_por_litro', ascending=False)
+    # df_aux20 = df_destino_tabela[df_destino_tabela['Preco_por_litro'] > 0].groupby(['Continente'])[['Preco_por_litro']].mean().reset_index().sort_values(by='Preco_por_litro', ascending=False)
 
     df_aux20 = df_aux20.rename(columns={'Preco_por_litro': 'Preço por Litro'})
 
@@ -432,7 +479,7 @@ def grafico_barra_preco_mediano(df_destino_tabela):
                  y="Preço por Litro",
                  hover_data={'Preço por Litro': ':$.2f'},
                  labels={'Preço por Litro': 'Preço por Litro'},
-                 title='Preço por Litro (US$) Mediano por Região',
+                 title=f'Preço por Litro (US$) Mediano por Região entre {titulo_texto}',
                  color_discrete_sequence=['#910A67'],
                                  
                  )
@@ -548,14 +595,25 @@ def grafico_layout_mapa(
     return st.plotly_chart(fig)
 
 
-def grafico_mapa_geral(df_destino_tabela,var_valor_litros):
+def grafico_mapa_geral(df_destino_tabela,var_valor_litros, ultimos15anos_geral):
 
     if var_valor_litros:
         var = "Valor"
     else:
         var = "Litros"
 
-    df_aux5v2 = df_destino_tabela[df_destino_tabela["Ano"] > 0].groupby(['Continente','ISO_code', 'Destino'])[[var]].sum().reset_index().sort_values(by='Continente', ascending=False)
+    if ultimos15anos_geral:
+        ultimos15 = df_destino_tabela[(df_destino_tabela["Ano"] > 0) & (df_destino_tabela['Ano'] >= 2008)].sort_values(by='Ano')
+        titulo_texto = '2008 - 2022'
+    else:    
+        ultimos15 = df_destino_tabela[df_destino_tabela["Ano"] > 0]
+        titulo_texto = '1970 - 2022'
+
+    # st.dataframe(ultimos15)
+
+    df_aux5v2 = ultimos15.groupby(['Continente','ISO_code', 'Destino'])[[var]].sum().reset_index().sort_values(by='Continente', ascending=False)
+
+    # df_aux5v2 = df_destino_tabela[df_destino_tabela["Ano"] > 0].groupby(['Continente','ISO_code', 'Destino'])[[var]].sum().reset_index().sort_values(by='Continente', ascending=False)
 
     fig = px.scatter_geo(
             df_aux5v2,
@@ -606,19 +664,30 @@ def grafico_mapa_geral(df_destino_tabela,var_valor_litros):
                 "title": "",
                 "itemsizing": "constant",
             },
-            title_text=f"Total Exportado em {var} - (US$) por Continente",
+            title_text=f"Total Exportado em {var} - (US$) por Continente entre {titulo_texto}",
             title_sup=f"Mapa exibindo o {var} total de vinho exportado (em US$) para cada Continente"
     )
 
 
-def grafico_linha_comercio(dfcomercio, coluna):
+def grafico_linha_comercio(dfcomercio, coluna, ultimos15anos_geral):
+
+    # dfcomercio = dfcomercio
+
+    if ultimos15anos_geral:
+        dfcomercio['Ano'] = dfcomercio['Ano'].astype(int)
+        ultimos15 = dfcomercio[dfcomercio['Ano'] >= 2007]
+        titulo_ano = '2007 - 2021'
+    else:
+        dfcomercio['Ano'] = dfcomercio['Ano'].astype(int)
+        ultimos15 = dfcomercio[dfcomercio['Ano'] > 0]
+        titulo_ano = '1970 - 2021'
 
     if coluna == 'Ano':
         fig = px.line(
-            dfcomercio,
+            ultimos15,
             x="Ano",
-            y=dfcomercio.columns[1:],
-            title=f'Vendas por Ano',
+            y=ultimos15.columns[1:],
+            title=f'Vendas por Ano entre {titulo_ano}',
             color_discrete_sequence=px.colors.qualitative.Plotly,
             markers=True,
         )
@@ -669,10 +738,10 @@ def grafico_linha_comercio(dfcomercio, coluna):
         )
     else:
         # Gráfico de Linha por Ano
-        fig = px.line(dfcomercio, 
+        fig = px.line(ultimos15, 
                             x='Ano', 
                             y=coluna, 
-                            title=f'Vendas de {coluna} por Ano',
+                            title=f'Vendas de {coluna} por Ano entre {titulo_ano}',
                             hover_data={coluna: ':$.2f'},
                             markers=True,
                             line_shape='spline',
@@ -689,7 +758,7 @@ def grafico_linha_comercio(dfcomercio, coluna):
             plot_bgcolor="white",
 
             # Configurar o tamanho da fonte do título
-            title_font=dict(size=16),
+            title_font=dict(size=18),
             
             # Configurar o tamanho da linha
             showlegend=True,  
@@ -726,9 +795,19 @@ def grafico_linha_comercio(dfcomercio, coluna):
     st.plotly_chart(fig)
 
 
-def grafico_barra_comercio(dfcomercio):
+def grafico_barra_comercio(dfcomercio, ultimos15anos_geral):
+
+    if ultimos15anos_geral:
+        dfcomercio['Ano'] = dfcomercio['Ano'].astype(int)
+        ultimos15 = dfcomercio[dfcomercio['Ano'] >= 2007]
+        titulo_ano = '2007 - 2021'
+    else:
+        dfcomercio['Ano'] = dfcomercio['Ano'].astype(int)
+        ultimos15 = dfcomercio[dfcomercio['Ano'] > 0]
+        titulo_ano = '1970 - 2021'
+        
     ## ajustes para o gráfico de barras ##
-    dfcomerciov5 = dfcomercio.drop(columns=['Ano'])
+    dfcomerciov5 = ultimos15.drop(columns=['Ano'])
     dfcomerciov6 = dfcomerciov5.T
     dfcomerciov6['Total'] = dfcomerciov6.sum(axis=1)
     dfcomerciov7 = dfcomerciov6.reset_index()
@@ -741,7 +820,7 @@ def grafico_barra_comercio(dfcomercio):
                  x='Vinhos', 
                  y='Total', 
                  labels={'Total': 'Preço Total'},
-                 title='Vendas de Vinho de Mesa por Ano',
+                 title=f'Vendas de Vinho de Mesa por Ano entre {titulo_ano}',
                  color_discrete_sequence=['#910A67'])
     
      

@@ -82,7 +82,7 @@ def tamanho_font_card():
     st.markdown(css, unsafe_allow_html=True)
 
 
-def selecao_dataframe(df):
+def selecao_dataframe(df, ultimos15anos_geral):
 
     row1 = row([2, 4, 1], vertical_align="bottom")
     row2 = row(3, vertical_align="bottom")
@@ -102,11 +102,19 @@ def selecao_dataframe(df):
                                                                             'América do Sul', 
                                                                             'América do Norte'])
 
+    if ultimos15anos_geral:
+        df = df[df['Ano Exportação'] >= 2008]
+        titulo_texto = '2008 - 2022'
+    else:
+        df = df[df['Ano Exportação'] > 0]
+        titulo_texto = '1970 - 2022'
+
     df['Ano Exportação'] = df['Ano Exportação'].astype(str)
 
     df = df[df['Continente'].isin(continetes)]
     df = df[df['País de Destino'].str.contains(row1.text_input("País de Destino"), case=False)]
-    df = df[df['Ano Exportação'].str.contains(row1.text_input("Ano Exportação"), case=False)]
+    df = df[df['Ano Exportação'].str.contains(row1.text_input(f"Ano Exportação {titulo_texto}"), case=False)]
+
 
 
     # --- row2 placehoder --- #
