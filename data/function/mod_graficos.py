@@ -7,12 +7,12 @@ from matplotlib.ticker import FuncFormatter
 
 def formatar_como_moeda(valor, divisor_casas):
     # Ajuste da formatação de moeda
-    return f'US$ {valor/divisor_casas:,.2f}{"MM" if valor >= 1000000 else "M"}'.replace(',', 'X').replace('.', ',').replace('X', '.')
+    return f'US$ {valor/divisor_casas:,.2f} {"M" if valor >= 1000000 else "K"}'.replace(',', 'X').replace('.', ',').replace('X', '.')
 
 
 def formatar_como_quantidade(valor, divisor_casas):
     # Ajuste da formatação de moeda
-    return f'{valor/divisor_casas:,.2f}{"MM" if valor >= 1000000 else "M"}'.replace(',', 'X').replace('.', ',').replace('X', '.')
+    return f'{valor/divisor_casas:,.2f} {"M" if valor >= 1000000 else "K"}'.replace(',', 'X').replace('.', ',').replace('X', '.')
 
 
 def billion_formatter(x, pos):
