@@ -14,6 +14,7 @@ exp_vinho = './data/doc/ExpVinho.csv'
 exp_espumante = './data/doc/ExpEspumantes.csv'
 exp_suco = './data/doc/ExpSuco.csv'
 exp_uva = './data/doc/ExpUva.csv'
+exp_basse_acess = './data/doc/EXP_1997_2023.xlsx'
 
 # importação
 imp_espumante = './data/doc/ImpEspumantes.csv'
@@ -364,6 +365,9 @@ def pais_geral_funcao(df_exp_vinho_tab, df_pais, ultimos15anos_geral):
     return df_pais_valortotal_nomes
 
 
+@st.cache_data
+def exporta_topn():
+    df_exp_top_paises = pd.read_excel(exp_basse_acess, sheet_name='exporta_total')
 
-
+    return df_exp_top_paises
 

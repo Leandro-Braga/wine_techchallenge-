@@ -31,7 +31,18 @@ pd.options.display.float_format = "{:.2f}".format
 
 # -- imagens e logos -- #
 img_wine = './data/img/vinho.png'
+img_us = './data/img/estados-unidos.png'
+img_rusia = './data/img/russia.png'
+img_parag = './data/img/paraguai.png'
+img_geral = './data/img/vinho_geral.png'
+img_geralv2 = './data/img/vinho_geral_v2.jpg'
+
 img_wine = Image.open(img_wine)
+img_usa = Image.open(img_us)
+img_ru = Image.open(img_rusia)
+img_pa = Image.open(img_parag)
+img_uva = Image.open(img_geral)
+img_uvav2 = Image.open(img_geralv2)
 
 # --- Configurações da página 'Geral' --- #
 st.set_page_config(
@@ -69,7 +80,7 @@ ultimos15anos_geral = st.toggle('**1970-2022 / últimos 15 anos**', ['1970-2022,
 
 st.markdown('**Fonte** - [Dados da Vitivinicultura](https://www.cnpuv.embrapa.br/vitibrazil/index.php?opcao=opt_02)')
 
-aba1, aba2, aba3 = st.tabs(['🚢 Exportação', '📁 Tabela Origem e Destino','💳 Comércio'])
+aba1, aba2, aba3, aba4 = st.tabs(['🚢 Exportação', '📁 Tabela Origem e Destino','💳 Comércio', '💡 Análise'])
 
 
 with aba1:
@@ -134,6 +145,8 @@ with aba1:
     
     mod_graficos.grafico_ano_barra(df_exp_vinho_tab, ultimos15anos_geral)
 
+    st.markdown('- 📈 As exportações têm apresentado crescimento nos últimos 7 anos. A oscilação nas exportações, não tem correlação com a produção de uvas no país, pois segunda a Embrapa a produção é crescente. Portanto, podemos buscar esse crescimento.')
+
     st.divider()
 
     ## Selecionar o pais para verificar o valor de exportação ##
@@ -156,6 +169,15 @@ with aba1:
         st.markdown("""
             Os gráficos que criamos mostram a variação das exportações de vinhos dos principais paises entre os anos de 1970 e 2022. Este gráfico oferece uma visão detalhada e histórica da evolução da exportação de vinhos do país selecionado, permitindo identificar padrões, picos e quedas ao longo do tempo.
                     """)
+        
+        if pais == 'Paraguai':
+            st.markdown("""* As exportações ao Paraguai representam 65,4% das exportações. Precisamos manter o relacionamento com nosso principal parceiro comercial, porém expandir para novos mercados potenciais.""")
+
+        elif pais == 'Estados Unidos':
+            st.markdown("""* Para entender melhor porque os EUA estão entre os maiores parceiros comerciais de vinhos em toda série histórica, precisamos analisar o comportamento ao longo de muitos anos.""")
+        elif ultimos15anos_geral:
+            st.markdown("""**1970 - 2022: As exportações aos Estados Unidos caíram muito no final da década de 90.**""")
+            
     with col4:
 
         if ultimos15anos_geral:
@@ -224,6 +246,8 @@ with aba3:
 
     grafico = mod_graficos.grafico_cotacao(df_cotacaov2, ultimos15anos_geral)
 
+    st.markdown("""- Custo médio em Dólar sofrendo oscilação, mas em média se mantendo estável. Com a valorização do Dólar frente ao Real, a exportação fica mais atrativa.""")
+
     st.divider()
 
     st.markdown('#### 🍷 :violet[**Comércio de vinho:**]')
@@ -272,15 +296,87 @@ with aba3:
     
     dfcoluna = dfcomercio
 
-    coluna = grafico = st.radio('**Selecione o Tipo de Vinho:**', (dfcoluna.columns))
+    coluna = st.radio('**Selecione o Tipo de Vinho:**', (dfcoluna.columns))
+    # coluna = grafico = st.radio('**Selecione o Tipo de Vinho:**', (dfcoluna.columns))
 
     mod_graficos.grafico_linha_comercio(dfcomercio, coluna, ultimos15anos_geral)
 
+    st.markdown(f"""- Nos últimos 15 anos queda na comercialização, mas que vem se recuperando fortemente nos últimos 2 anos analisados.""")
+    st.markdown(f"""- Os vinhos orgânicos são bem novos no mercado, mas a procura cresce exponencialmente.""")
+    st.markdown(f"""- Percebemos que a produção de orgânicos no mundo também vem crescendo, o que indica a aceitação desse tipo de produto em nível global.""")
+    
+    st.divider()
+    
     st.markdown(f"""📊 As vendas totais durante esse período foram lideradas pelo **vinho de mesa**, com **:blue[{vinho_mesa_barra}]**, seguido pelo **vinho fino de mesa** com **:blue[{Fino_Mesa_barra}]**. Além disso, os **frizantes**, **vinhos especiais** e **orgânicos** contribuíram com valores de **:blue[{frizante}]**, **:blue[{especiais}]** e **:blue[{organico}]**, respectivamente. Avaliações detalhadas desses tipos de vinhos oferecem insights sobre as preferências e tendências do mercado.
     (**:blue[Vendas em US dólar]**)""")
 
     mod_graficos.grafico_barra_comercio(dfcomercio, ultimos15anos_geral)
     
+with aba4:
+    st.header('Análise Final', divider='violet')
+
+    df_exp_top_paises = mod_abrir_arquivo.exporta_topn()
+    lista_pais_topn = df_exp_top_paises['Pais'].unique()
+
+    st.markdown('* **Selecione o país para visualizar nossa análise.**')
+
+    pais_topn = st.radio('**Selecione o País:**', (lista_pais_topn))
+    
+    if pais_topn == 'Estados Unidos':
+        st.markdown("""Não temos queda nas exportações gerais para esse período do final da década de 90, o que indica não temos problemas comerciais que possam impedir a exportação de vinhos com os **Estados Unidos**.""")
+
+    elif pais_topn == 'Rússia':
+        st.markdown("""A **Rússia** vem perdendo relacionamento nas exportações ao longo da ultima década, motivos globais e ainda com cenário atual de conflito, são sinais de receio para fortalecer o relacionamento, pelo menos por enquanto.""")
+
+    else:
+        st.markdown("""Temos um sólido relacionamento com o **Paraguai**, no total de exportações, considerando tudo o que é comercializado.""")
+
+
+    mod_graficos.grafico_linha_topn_exportacao(df_exp_top_paises, pais_topn)
+
+
+    col8, col9 = st.columns(2)
+
+    with col8:
+        if pais_topn == 'Estados Unidos':
+            st.markdown("""Não percebemos queda no consumo por habitante, segundo estudo da Apex-Brasil no período do final da década de 90, mostrando inclusive, aumento significativo no consumo da bebida.
+            O vinho representa cerca de 14% do mercado de bebidas alcoólicas dos EUA e é uma indústria de $72 bilhões. De acordo com o Wine Institute.
+                        """)
+            st.markdown('**Fonte** - [apexbrasil](https://www.apexbrasil.com.br/Content/imagens/10235c85-73e5-468d-9643-c2eb53a2be00.pdf)')
+            st.markdown('**Fonte** - [www.gov.br](https://www.gov.br/empresas-e-negocios/pt-br/invest-export-brasil/exportar/conheca-os-mercados/pesquisas-de-mercado/estudo-de-mercado.pdf/EUAportuguesVinho.pdf)')
+
+        elif pais_topn == 'Rússia':
+            st.markdown("""A **Rússia** é o segundo país que mais importou nossos vinhos, porém, grandes quantidades por um curto período. Mas hoje os números são insignificantes.""")
+
+        else:
+            st.markdown("""Apesar de o **Paraguai** ser nosso maior parceiro comercial, ainda podemos observar um crescimento expressivo nas exportações. O que nos leva a concluir que temos alto potencial de crescimento nos parceiros menores. """)
+    
+    with col9:
+        if pais_topn == 'Estados Unidos':
+            st.markdown("""Segundo a Forbes, os incêndios na Califórnia, principal zona produtora de vinhos dos EUA, fazem a qualidade de seus vinhos e produtividade caírem. Isso pode apresentar uma oportunidade para oferecermos um pouco da nossa segurança com fornecimento dessa bebida.""")
+            st.markdown('**Fonte** - [forbes](https://forbes.com.br/forbesagro/2022/10/como-o-clima-global-esta-mudando-a-producao-local-de-uvas-e-vinhos/)')
+            
+        elif pais_topn == 'Rússia':
+            st.markdown("""O aumento em valor é ainda mais expressivo por conta da valorização do Dólar frente ao Real.""")
+
+        else:
+            st.markdown("""O aumento em valor é ainda mais expressivo por conta da valorização do Dólar frente ao Real.""")
+            
+    st.header('Considerações Finais', divider='violet')
+
+    col10, col11 = st.columns(2)
+    with col10:
+        st.image(img_pa, width=80)
+        st.markdown(f"""**:violet[Conclusão 1:]** Como o relacionamento como Paraguai já está estabelecido nas exportações gerais e a exportação de vinhos está em ascensão, além da proximidade geográfica que gera menos custos de transporte. Precisamos manter esse relacionamento e fortalece-lo ainda mais.""")
+        st.image(img_usa, width=80)
+        st.markdown(f"""**:violet[Conclusão 2:]** Os EUA já compraram muito dos nossos vinhos no final da década de 90 e como não temos motivos para não nos relacionarmos com eles, precisamos retomar essas exportações. Podemos aproveitar ainda as instabilidades climáticas enfrentadas por sua principal zona produtora de vinho, a Califórnia, que vem sofrendo com queimadas recorrentes ano após ano, afetando sua produção interna.""")
+        st.image(img_uva, width=80)
+        st.markdown("""**:violet[Conclusão 3:]** Baseando-se no aumento exponencial do consumo interno dos nosso vinhos orgânicos, consideramos também que a exportação desse produto seja uma ótima oportunidade. Já que a tendência de procura por produtos orgânicos é global.""")
+    with col11:
+        st.image(img_uvav2, width=600)
+
+        
+
 
 
 

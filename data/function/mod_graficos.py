@@ -868,4 +868,76 @@ def grafico_barra_comercio(dfcomercio, ultimos15anos_geral):
     st.plotly_chart(fig)
 
 
+def grafico_linha_topn_exportacao(df, pais):
 
+    ultimos15 = df[df['Pais'] == pais][['Ano', 'Valor']]
+
+    # Criar o gráfico de linha com Plotly Express
+    fig = px.line(
+        ultimos15,
+        x='Ano',
+        y='Valor',
+        hover_data='Ano',
+        markers=True,
+        labels={'Ano': 'Ano'},
+        title=f'Exportação Vinho por Ano - {pais}',
+        line_shape='spline',  # curvatura da linha (linear, spline, hv, vh, hvh, vhl)
+        line_dash_sequence=['solid'],  # estilo da linha
+        color_discrete_sequence=['#910A67'], # cor da linha
+        # text='cotacao_dolar' ## - Rotulos por coluna 
+    )
+
+
+    # Adicionar título e rótulos dos eixos
+    fig.update_layout(
+        xaxis_title='Ano',
+        yaxis_title='Valor',
+        yaxis_tickprefix='US$ ',  # Adicionar prefixo de dólar
+        plot_bgcolor="white",
+
+        # Configurar o tamanho da fonte do título
+        title_font=dict(size=18),
+        
+        # Configurar o tamanho da linha
+        showlegend=True,  
+        legend=dict(font=dict(size=16)),  # Tamanho da fonte na legenda
+
+        # Configurar a cor de fundo
+        # paper_bgcolor='#DCF2F1',
+        # paper_bgcolor='#000000',
+        
+        # Configurar a cor das linhas do grid no eixo X e Y
+        # xaxis=dict(gridcolor='red'),
+        # yaxis=dict(gridcolor='#3B3486'),
+        
+        # Tamanho do gráfico
+        width=1100,
+        height=500,
+
+
+        xaxis=dict( # xaxis=dict(gridcolor='red'), 
+            title=dict(text='Ano', font=dict(size=16, color='#3B3486')), 
+            tickfont=dict(size=14, color='#3B3486')
+        ),
+
+        yaxis=dict(gridcolor='#3B3486',
+            title=dict(text='Valor', font=dict(size=16, color='#3B3486')), 
+            tickfont=dict(size=14, color='#3B3486'),
+            tickprefix='US$ ',
+        ),
+    )
+
+    # Configurar o tamanho da linha
+    fig.update_traces(
+        line=dict(width=4),  
+        marker=dict(size=8), 
+        # Configurar a cor e a fonte do hover_data
+        hoverlabel=dict(
+            bgcolor='#3C0753',  
+            font=dict(family='Arial', size=16, color='white'),
+        ),
+    )
+
+    # fig.show()
+
+    st.plotly_chart(fig)
