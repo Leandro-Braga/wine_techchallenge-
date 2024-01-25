@@ -175,8 +175,8 @@ with aba1:
 
         elif pais == 'Estados Unidos':
             st.markdown("""* Para entender melhor porque os EUA estão entre os maiores parceiros comerciais de vinhos em toda série histórica, precisamos analisar o comportamento ao longo de muitos anos.""")
-        elif ultimos15anos_geral:
-            st.markdown("""**1970 - 2022: As exportações aos Estados Unidos caíram muito no final da década de 90.**""")
+            st.markdown("""- **1970 - 2022: As exportações aos Estados Unidos caíram muito no final da década de 90.**""")
+
             
     with col4:
 
@@ -318,28 +318,33 @@ with aba4:
     df_exp_top_paises = mod_abrir_arquivo.exporta_topn()
     lista_pais_topn = df_exp_top_paises['Pais'].unique()
 
-    st.markdown('* **Selecione o país para visualizar nossa análise.**')
+    st.markdown('**:blue[Selecione o país para visualizar nossa análise!]**')
+
 
     pais_topn = st.radio('**Selecione o País:**', (lista_pais_topn))
     
     if pais_topn == 'Estados Unidos':
+        st.image(img_usa, width=80)
         st.markdown("""Não temos queda nas exportações gerais para esse período do final da década de 90, o que indica não temos problemas comerciais que possam impedir a exportação de vinhos com os **Estados Unidos**.""")
 
     elif pais_topn == 'Rússia':
+        st.image(img_ru, width=80)
         st.markdown("""A **Rússia** vem perdendo relacionamento nas exportações ao longo da ultima década, motivos globais e ainda com cenário atual de conflito, são sinais de receio para fortalecer o relacionamento, pelo menos por enquanto.""")
 
     else:
+        st.image(img_pa, width=80)
         st.markdown("""Temos um sólido relacionamento com o **Paraguai**, no total de exportações, considerando tudo o que é comercializado.""")
 
 
     mod_graficos.grafico_linha_topn_exportacao(df_exp_top_paises, pais_topn)
 
+    st.markdown("""**Fonte de dados do gráfico -**[comexstat](http://comexstat.mdic.gov.br/pt/geral)""")
 
     col8, col9 = st.columns(2)
 
     with col8:
         if pais_topn == 'Estados Unidos':
-            st.markdown("""Não percebemos queda no consumo por habitante, segundo estudo da Apex-Brasil no período do final da década de 90, mostrando inclusive, aumento significativo no consumo da bebida.
+            st.markdown("""💻 Não percebemos queda no consumo por habitante, segundo estudo da Apex-Brasil no período do final da década de 90, mostrando inclusive, aumento significativo no consumo da bebida.
             O vinho representa cerca de 14% do mercado de bebidas alcoólicas dos EUA e é uma indústria de $72 bilhões. De acordo com o Wine Institute.
                         """)
             st.markdown('**Fonte** - [apexbrasil](https://www.apexbrasil.com.br/Content/imagens/10235c85-73e5-468d-9643-c2eb53a2be00.pdf)')
@@ -353,7 +358,7 @@ with aba4:
     
     with col9:
         if pais_topn == 'Estados Unidos':
-            st.markdown("""Segundo a Forbes, os incêndios na Califórnia, principal zona produtora de vinhos dos EUA, fazem a qualidade de seus vinhos e produtividade caírem. Isso pode apresentar uma oportunidade para oferecermos um pouco da nossa segurança com fornecimento dessa bebida.""")
+            st.markdown("""💻 Segundo a Forbes, os incêndios na Califórnia, principal zona produtora de vinhos dos EUA, fazem a qualidade de seus vinhos e produtividade caírem. Isso pode apresentar uma oportunidade para oferecermos um pouco da nossa segurança com fornecimento dessa bebida.""")
             st.markdown('**Fonte** - [forbes](https://forbes.com.br/forbesagro/2022/10/como-o-clima-global-esta-mudando-a-producao-local-de-uvas-e-vinhos/)')
             
         elif pais_topn == 'Rússia':
@@ -365,15 +370,16 @@ with aba4:
     st.header('Considerações Finais', divider='violet')
 
     col10, col11 = st.columns(2)
+
     with col10:
         st.image(img_pa, width=80)
-        st.markdown(f"""**:violet[Conclusão 1:]** Como o relacionamento como Paraguai já está estabelecido nas exportações gerais e a exportação de vinhos está em ascensão, além da proximidade geográfica que gera menos custos de transporte. Precisamos manter esse relacionamento e fortalece-lo ainda mais.""")
+        st.markdown(f"""**:violet[Conclusão 1:]** Dada a sólida presença nas exportações para o Paraguai, com destaque para o crescimento das vendas de vinhos, aliado à vantagem geográfica que reduz os custos logísticos, é estratégico consolidar e ampliar esse relacionamento para impulsionar ainda mais os resultados comerciais.""")
         st.image(img_usa, width=80)
-        st.markdown(f"""**:violet[Conclusão 2:]** Os EUA já compraram muito dos nossos vinhos no final da década de 90 e como não temos motivos para não nos relacionarmos com eles, precisamos retomar essas exportações. Podemos aproveitar ainda as instabilidades climáticas enfrentadas por sua principal zona produtora de vinho, a Califórnia, que vem sofrendo com queimadas recorrentes ano após ano, afetando sua produção interna.""")
+        st.markdown(f"""**:violet[Conclusão 2:]** Considerando a expressiva compra de nossos vinhos pelos EUA no final dos anos 90 e a ausência de razões para não mantermos relações comerciais com eles, é estratégico reavivar essas exportações. Além disso, podemos explorar as instabilidades climáticas na principal região vinícola deles, na Califórnia, que enfrenta frequentes incêndios, impactando sua produção interna.""")
         st.image(img_uva, width=80)
-        st.markdown("""**:violet[Conclusão 3:]** Baseando-se no aumento exponencial do consumo interno dos nosso vinhos orgânicos, consideramos também que a exportação desse produto seja uma ótima oportunidade. Já que a tendência de procura por produtos orgânicos é global.""")
+        st.markdown("""**:violet[Conclusão 3:]** Considerando o notável aumento no consumo interno de nossos vinhos orgânicos, acreditamos que a exportação desse produto representa uma excelente oportunidade. A demanda por produtos orgânicos é uma tendência global, o que fortalece ainda mais essa perspectiva.""")
     with col11:
-        st.image(img_uvav2, width=600)
+        st.image(img_uvav2, width=500)
 
         
 
