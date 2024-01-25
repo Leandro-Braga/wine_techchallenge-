@@ -20,10 +20,6 @@ warnings.filterwarnings('ignore')
 # Rodrigo
 # Roberto
 
-# Análise - Problema – Conclusão.
-# Qual é o mercado que podemos explorar nos próximos anos?
-
-
 #########################
 
 ## --- Formatação de valores --- ##
