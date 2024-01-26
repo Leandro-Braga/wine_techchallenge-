@@ -122,7 +122,7 @@ with aba1:
         💵 **Economia do Paraguai**:
         - Conforme tabela de países com o Paraguai à frente, exportando um total de {valor_paraquai}, seguido pelos Estados Unidos e Rússia.
         - A análise dos valores de exportação mostra que o Paraguai teve um maior valor de exportação, superando os Estados Unidos. Esse fenômeno pode ser explicado por vários fatores relacionados ao desempenho econômico e às relações comerciais entre os países.
-        - Crescimento Econômico do Paraguai: A economia do Paraguai também registrou um crescimento significativo entre 2022 e 2023. O setor agrícola, particularmente a produção de soja, arroz, cana-de-açúcar e mandioca, foi um fator-chave nesse crescimento. O Paraguai experimentou um aumento na demanda externa por seus produtos.
+        - Crescimento Econômico do Paraguai: A economia do Paraguai também registrou um crescimento significativo. O setor agrícola, particularmente a produção de soja, arroz, cana-de-açúcar e mandioca, foi um fator-chave nesse crescimento, além disso a exportação de vinho apresenta uma crescente. O Paraguai experimentou um aumento na demanda externa por seus produtos.
 
         🗽 **Mercado dos EUA**:
         - Os EUA representam o maior mercado de varejo de vinhos e são um dos que mais crescem em consumo e produção. O mercado americano é majoritariamente ocupado por produtores locais. Algumas das maiores empresas produtoras de vinho do mundo estão localizadas nos Estados Unidos.
