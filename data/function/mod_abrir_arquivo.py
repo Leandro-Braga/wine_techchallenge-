@@ -14,6 +14,7 @@ exp_vinho = './data/doc/ExpVinho.csv'
 exp_espumante = './data/doc/ExpEspumantes.csv'
 exp_suco = './data/doc/ExpSuco.csv'
 exp_uva = './data/doc/ExpUva.csv'
+exp_basse_acess = './data/doc/EXP_1997_2023.xlsx'
 
 # importação
 imp_espumante = './data/doc/ImpEspumantes.csv'
@@ -105,7 +106,7 @@ def exportacao():
     # alteração do índice do tipo string retirando o '.1'
     df_exp_vinho_tab.index = df_exp_vinho_tab.index.map(lambda x: x.replace('.1', ''))
 
-    return df_exp_vinho_tab, df_exp_espumante, df_exp_suco, df_exp_uva
+    return df_exp_vinho_tab
 
 
 @st.cache_data
@@ -329,14 +330,20 @@ def comercializacao():
 
 # base país
 @st.cache_data
-def pais_geral_funcao(df_exp_vinho_tab, df_pais):
+def pais_geral_funcao(df_exp_vinho_tab, df_pais, ultimos15anos_geral):
 
     # df_pais = pd.read_csv(pais, delimiter=';', encoding='latin-1')
 
     # Recebe o df_exp_vinho_tab e cria uma coluna com o 'total_geral'
     # para ter o total por pais
-    
-    df_pais_valor = df_exp_vinho_tab[df_exp_vinho_tab['classe'] == 'valor']
+
+    # st.dataframe(df_exp_vinho_tab[df_exp_vinho_tab['classe'] == 'valor'].tail(15))
+    if ultimos15anos_geral:
+        df_pais_valor = df_exp_vinho_tab[df_exp_vinho_tab['classe'] == 'valor'].tail(15)
+    else:
+        df_pais_valor = df_exp_vinho_tab[df_exp_vinho_tab['classe'] == 'valor']
+
+
     df_pais_valor = df_pais_valor.drop(columns={'total_geral','classe'})
     df_pais_valor = df_pais_valor.T
     df_pais_valor['valor_total'] = df_pais_valor.sum(axis=1)
@@ -358,6 +365,9 @@ def pais_geral_funcao(df_exp_vinho_tab, df_pais):
     return df_pais_valortotal_nomes
 
 
+@st.cache_data
+def exporta_topn():
+    df_exp_top_paises = pd.read_excel(exp_basse_acess, sheet_name='exporta_total')
 
-
+    return df_exp_top_paises
 
