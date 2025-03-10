@@ -228,8 +228,12 @@ def destino_origem(df_populacao_geral, df_pais):
 
     df_singapura = pd.DataFrame(columns=df_singapura_col, data=[df_singapura_dado])
 
-    # Adicionando a linha ao DataFrame existente
-    df_pais_continet = df_pais_continet.append(df_singapura, ignore_index=True)
+    try:
+        # Adicionando a linha ao DataFrame existente
+        df_pais_continet = df_pais_continet.append(df_singapura, ignore_index=True)
+    except:
+        df_pais_continet = pd.concat([df_pais_continet, df_singapura], ignore_index=True)
+
 
     df_pais_continet.columns = ['Destino', 'pais_ing', 'iso_code', 'continent']
 
